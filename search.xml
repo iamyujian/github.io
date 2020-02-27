@@ -291,6 +291,22 @@
 <ol start="4">
 <li>重新<code>hexo g，hexo s</code>就能看到效果了。<br>安装成功后可以在DaoVoice控制台上的聊天设置里设置聊天窗口样式</li>
 </ol>
+<h1 id="文章阅读量"><a href="#文章阅读量" class="headerlink" title="文章阅读量"></a>文章阅读量</h1><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubGVhbmNsb3VkLmNuLw==" title="https://www.leancloud.cn/">leadCloud<i class="fa fa-external-link"></i></span>,登录注册</li>
+<li>创建应用–&gt;开发板–&gt;创建</li>
+<li>完成后点击设置–&gt;存储–&gt;新建Class–&gt;为了保证对NexT主题的修改兼容，新建Class名字必须为<code>Counter</code></li>
+<li>Class创建完成后，选择界面最左侧的<code>设置</code> → <code>应用Key</code>，复制<code>App ID</code>和<code>App Key</code></li>
+<li>打开<code>博客根目录/themes/next/</code>下的<code>_config.yml</code>，查找<code>leancloud</code>，填写复制来的<code>App ID</code>和<code>App Key</code>，重新生成、部署博客即可正常统计文章阅读量。</li>
+<li>因为AppID以及AppKey是暴露在外的，为了确保只用于我们自己的博客，建议<strong>设置Web安全域名，填入自己的博客域名</strong>。</li>
+</ol>
+<ul>
+<li><p>记录文章访问量的唯一标识符是文章的发布日期和文章的标题，因此请确保这两个数值组合的唯一性，如果更改了这两个数值，会造成文章阅读数值的清零重计。</p>
+</li>
+<li><p>初始的文章统计量显示为0。在配置好阅读量统计服务之后，第一次打开博文时，会自动向服务器发送数据，该数据会被记录在对应的应用的Counter表中。</p>
+</li>
+<li><p>修改Counter表中的time字段的数值，可以修改文章的访问量。双击具体的数值，修改之后回车即可保存。</p>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>Hexo</category>
@@ -336,7 +352,7 @@
 <p>想要在文章中插入图片的话，可以按照Markdown语法来插入。图片的存放有两种方式：在本地D:\Hexo\source\目录下新建一个存放图片的文件夹，比如images，然后把想要插入的图片放在里面，插入图片的路径；第二种方法是把图片上传到网络，然后插入图片路径。推荐使用第二种。</p>
 <ul>
 <li>可以选择喜欢的主题，我使用的是 next </li>
-<li></li>
+<li>如何设置「阅读全文」？在文章中使用 <code>&lt;!-- more --&gt;</code> 手动进行截断，Hexo 提供的方式</li>
 </ul>
 ]]></content>
       <categories>
