@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32X32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16X16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.1","exturl":true,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "e2de3bae"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="nodejs 学习文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js">
+<meta property="og:url" content="http://yoursite.com/2020/02/28/Node.js/index.html">
+<meta property="og:site_name" content="锦瑟">
+<meta property="og:description" content="nodejs 学习文档">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/02/28/Vf9Pu8plSRAUHzN.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200202211841081.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200203191338074.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200122130426646.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200122130538922.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200122141535489.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200122141600511.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200208212828302.png">
+<meta property="article:published_time" content="2020-02-28T10:54:22.000Z">
+<meta property="article:modified_time" content="2020-02-28T12:31:07.073Z">
+<meta property="article:author" content="余健">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/02/28/Vf9Pu8plSRAUHzN.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/28/Node.js/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Node.js | 锦瑟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<!-- 点击爆炸效果 -->
+  <!--  -->
+
+
+<link rel="alternate" href="/atom.xml" title="锦瑟" type="application/atom+xml">
+</head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">锦瑟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right"></div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">14</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2lhbXl1amlhbg==" title="My GitHub" aria-label="My GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/Node.js/">
+    
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="余健">
+      <meta itemprop="description" content="沧海月明珠有泪，蓝田日暖玉生烟。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="锦瑟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Node.js
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-02-28 18:54:22 / 修改时间：20:31:07" itemprop="dateCreated datePublished" datetime="2020-02-28T18:54:22+08:00">2020-02-28</time>
+            </span>
+
+          
+            <span id="/2020/02/28/Node.js/" class="post-meta-item leancloud_visitors" data-flag-title="Node.js" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>26k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>24 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center><img src="https://i.loli.net/2020/02/28/Vf9Pu8plSRAUHzN.png" style="zoom: 50%;"/> 
+
+<p>nodejs 学习文档</center></p>
+<a id="more"></a>
+
+
+<h1 id="Node-js介绍"><a href="#Node-js介绍" class="headerlink" title="Node.js介绍"></a>Node.js介绍</h1><h2 id="node-js是什么"><a href="#node-js是什么" class="headerlink" title="node.js是什么"></a>node.js是什么</h2><p>Node.js不是一门语言，不是库，不是框架，是一个<code>javascript</code>运行时环境，可以解析和执行<code>javascript</code>代码。是一个平台</p>
+<ul>
+<li><p>浏览器中的<code>javascript</code>：</p>
+<ul>
+<li>EcmaScript</li>
+<li>BOM</li>
+<li>DOM</li>
+</ul>
+</li>
+<li><p>Node.js 中的<code>javascript</code>：</p>
+<ul>
+<li>没有<code>BOM</code>、<code>DOM</code>，服务端不处理页面(DOM)</li>
+<li><code>EcmaScript</code></li>
+<li>在Node这个<code>javascript</code>执行环境中为<code>javascript</code>提供了一些服务器级别的<code>API</code><ul>
+<li>例如文件读写</li>
+<li>网络服务的构建</li>
+<li>网络通信</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Node.js的特性：</p>
+<ul>
+<li><code>event-driven</code>事件驱动</li>
+<li><code>non-blocking I/O model</code> 非阻塞IO模型(异步)</li>
+<li><code>lightweight and efficient</code> 轻量和高效</li>
+</ul>
+</li>
+<li><p>npm</p>
+<ul>
+<li>npm是世界上最大的开源库生态系统</li>
+<li>绝大多数<code>javascript</code>相关的包都存放在了<code>npm</code>上，这样做的目的是为了让开发人员更方便的去下载使用</li>
+<li><code>npm install jquery</code></li>
+</ul>
+</li>
+<li><p>构建在 Chrome 的 V8 引擎之上</p>
+<ul>
+<li>代码只是具有特定格式的字符串而已</li>
+<li>引擎可以认识它，可以帮你去解析和执行</li>
+<li>Google Chrome 的 V8 引擎是目前公认的解析执行 javascript 代码最快的</li>
+</ul>
+</li>
+</ul>
+<h2 id="Node-js-能做什么"><a href="#Node-js-能做什么" class="headerlink" title="Node.js 能做什么"></a>Node.js 能做什么</h2><ul>
+<li>Web服务器后台</li>
+<li>命令行工具</li>
+<li>对于前端工程师来讲，接触Node最多的是它的命令行工具<ul>
+<li>自己写的很少，主要是使用别人第三方的</li>
+<li>webpack</li>
+<li>gulp</li>
+<li>npm</li>
+</ul>
+</li>
+</ul>
+<h2 id="一些资源"><a href="#一些资源" class="headerlink" title="一些资源"></a>一些资源</h2><p><img src="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200202211841081.png" alt="image-20200202211841081.png"></p>
+<h2 id="能学习到什么"><a href="#能学习到什么" class="headerlink" title="能学习到什么"></a>能学习到什么</h2><ul>
+<li>B/S 编程模型<ul>
+<li>Browser - Server</li>
+<li>back-end</li>
+<li>任何服务端技术这种BS编程模型都是一样，和语言无关</li>
+<li>Node 只是作为我们学习BS模型的一个工具而已</li>
+</ul>
+</li>
+<li>模块化编程</li>
+<li>Node 常用 API</li>
+<li>异步编程</li>
+<li>Express 开发框架</li>
+<li>Ecmascript 6</li>
+<li>……</li>
+</ul>
+<h1 id="node-js模块化开发"><a href="#node-js模块化开发" class="headerlink" title="node.js模块化开发"></a>node.js模块化开发</h1><h2 id="开发规范"><a href="#开发规范" class="headerlink" title="开发规范"></a>开发规范</h2><ul>
+<li>文件操作中的相对路径可以省略 <code>./</code>，在模块加载中，相对路径中的<code>./</code>不能省略，如果省略了 <code>.</code> 则是磁盘根目录</li>
+<li>Nodejs 规定一个<code>JavaScript</code>文件就是一个模块，模块内部定义的变量和函数默认情况下在外部无法得到，只能得到输出结果，但是可以通过导出得到变量等数据</li>
+<li>我们一个项目中有且只有一个<code>node_module</code>，放在项目根目录中</li>
+<li>如果想要了解更多底层细节，可以自行参考：《深入浅出Node.js》中的模块系统章节</li>
+</ul>
+<h2 id="模块导出"><a href="#模块导出" class="headerlink" title="模块导出"></a>模块导出</h2><ul>
+<li><p><code>exports</code>导出模块，是<code>module.exports</code>的引用（地址引用关系），导岀对象最终以 <code>module.exports</code> 为准，如果你实在分不清楚 <code>exports</code> 和 <code>module.exports</code> 的区别，可以忘记 exports 而只使用 <code>module.exports</code></p>
+<ul>
+<li><p><code>module.exports</code>和<code>exports</code>的关系</p>
+<blockquote>
+<p>在 Node 中，每个模块内部都有一个自己的 module 对象，该 module 对象中，有一个成员叫：exports 也是一个对象，require 的得到的结果是 module.exports,默认在代码的最后一句：<code>return module.exports</code></p>
+<p><code>exports === module.exports</code>：exports 是 module.exports 的一个引用</p>
+<p>exports 的值的地址指向 module.exports 的值得指向，修改 exports 值会断开和 module.exports 的引用关系，反过来同理，但是最后 return 的是 module.exports 的值</p>
+</blockquote>
+</li>
+<li><p>导出多个成员(必须在对象中)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式一：</span></span><br><span class="line">exports.a = <span class="number">123</span></span><br><span class="line">exports.b = <span class="string">'hello'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式二：</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  add:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line">  &#125;,</span><br><span class="line">  str: <span class="string">'hello'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>导出单个成员(拿到的就是：函数、字符串)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="string">'hello'</span>  <span class="comment">//后面的会覆盖前面的</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="模块加载"><a href="#模块加载" class="headerlink" title="模块加载"></a>模块加载</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuaW5mb3EuY24vYXJ0aWNsZS9ub2RlanMtbW9kdWxlLW1lY2hhbmlzbQ==" title="https://www.infoq.cn/article/nodejs-module-mechanism">深入浅出 Node.js（三）：深入 Node.js 的模块机制<i class="fa fa-external-link"></i></span></p>
+<h3 id="模块有路径但没有后缀时"><a href="#模块有路径但没有后缀时" class="headerlink" title="模块有路径但没有后缀时"></a>模块有路径但没有后缀时</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'./find.js'</span>)</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./find'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>加载规则</li>
+</ul>
+<ol>
+<li><code>require</code> 方法根据模块路径查找模块，如果是完整路径，直接引入模块</li>
+<li>如果模块后缀省略，先找同名 JS 文件再找同名 JS 文件夹</li>
+<li>如果找到了同名文件夹，找文件夹中的 <code>index.js</code></li>
+<li>如果文件夹中没有 <code>index.js</code> 就会去当前文件夹中的 <code>package.js</code> 文件中查找 <code>main</code> 选项中的入口文件</li>
+<li>如果找指定的入口文件不存在或者没有指定入口文件就会报错，模块没有被找到</li>
+</ol>
+<h3 id="模块没有路径且没有后缀时"><a href="#模块没有路径且没有后缀时" class="headerlink" title="模块没有路径且没有后缀时"></a>模块没有路径且没有后缀时</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'find'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>加载规则</li>
+</ul>
+<ol>
+<li><code>Node.js</code>会假设它是系统模块</li>
+<li><code>Node.js</code>去当前文件所处目录中的<code>node_modules</code>文件夹中</li>
+<li>首先看是否有该名字的文件夹</li>
+<li>再找<code>package.json</code>文件中的<code>main</code>属性，然后加载成功</li>
+<li>如果 <code>package.json</code>文件不存在或者 <code>main</code> 指定的入口模块为空或没有</li>
+<li>则看该目录里面是否有<code>index.js</code>，有则默认加载</li>
+<li>没有则进入上一级目录中的<code>node_module</code>目录查找，如果没有，返回上上级，直到当前磁盘根目录还找不到</li>
+<li>报错：<code>can not find module xxx</code></li>
+</ol>
+<h3 id="优先从缓存加载"><a href="#优先从缓存加载" class="headerlink" title="优先从缓存加载"></a>优先从缓存加载</h3><blockquote>
+<p>加载模块的时候，先看一下这个模块有没有别加载过，如果缓存里面有就直接拿，没有就从新加载</p>
+</blockquote>
+<h2 id="系统模块"><a href="#系统模块" class="headerlink" title="系统模块"></a>系统模块</h2><p>Node运行环境提供的API.因为这些API都是以模块化的方式逬行开发的，所以我们又称Node运行环境提脚API为系统模块</p>
+<p><img src="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200203191338074.png" alt="image-20200203191338074.png"></p>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><p> f: file 文件，s: system 系统，文件操作系统。</p>
+<p>注意：<strong>文件操作中的路径指的是：执行当前文件的命令工具所处的文件路径</strong></p>
+<p><code>const fs = require (&#39;fs&#39;)</code></p>
+<ul>
+<li><p><strong>读取文件内容</strong></p>
+</li>
+<li><p>语法：<code>fs.readFile (&#39;文件路径&#39;[,&#39;文件编码&#39;],callback);</code></p>
+<ul>
+<li>读取的文件内容默认是二进制数据，可以加入第二个参数转，也可以转字符串：<code>toString()</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实例</span></span><br><span class="line"><span class="comment">//读取上—级css目录下中的base.css</span></span><br><span class="line">fs.readFile(<span class="string">'../css/base.css'</span>,<span class="string">'utf-8'</span> (err, doc) =&gt;</span><br><span class="line"><span class="comment">//如果文件读取发生错误参数err的值为错误对象,否则err的值为null </span></span><br><span class="line"><span class="comment">//doc參数为文件内容，失败则是 underfund </span></span><br><span class="line"><span class="keyword">if</span> (err = <span class="literal">null</span>) &#123;</span><br><span class="line"><span class="comment">//在控制台中输出文件内容</span></span><br><span class="line"><span class="built_in">console</span>.log(doc);</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>读取目录</strong></p>
+<p><code>fs.readdir(&#39;文件路径&#39;, callback);</code>输出的是文件名称拼成的数组</p>
+</li>
+<li><p><strong>写入文件内容</strong></p>
+<p><code>fs. writeFile (&#39;文件路径&#39;,&#39;数据&#39;,callback);</code></p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> content = <span class="string">'&lt;h3&gt; 正在使用 fs.writeFile 写入文件内容 &lt;/h3&gt;'</span>;</span><br><span class="line">fs.writeFile(<span class="string">'./index.html'</span>, content, err =&gt; &#123;</span><br><span class="line"><span class="keyword">if</span> (err != <span class="literal">null</span>) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(err);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span> .log(<span class="string">"文件写入成功');</span></span><br><span class="line"><span class="string">&#125;);</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="路径操作"><a href="#路径操作" class="headerlink" title="路径操作"></a>路径操作</h3><blockquote>
+<p>使用 path 需要导入先 path 模块<br>const path = require(‘path’)</p>
+</blockquote>
+<ul>
+<li><p>文件操作的相对路径</p>
+<ul>
+<li><code>./data/</code>：相对于当前目录</li>
+<li><code>data/a.txt</code>：相对于当前目录</li>
+<li><code>/data/a.txt</code>：绝对路径，当前文件模块所处磁盘根目录</li>
+<li><code>c:/xx/xx</code>：绝对路径</li>
+</ul>
+</li>
+<li><p><strong>相对路径vs绝对路径</strong></p>
+<ul>
+<li>绝对路径：<code>path.join(__dirname, &#39;./public/&#39;)</code></li>
+<li>大多数情况下使用绝对路径，因为相对路径有时候相对的是命令行工具的当前工作目录</li>
+<li>在读取文件或者设置文件路径时都会选择绝对路径</li>
+<li>使用<code>_dirname</code>获取当前文件所在的绝对路径</li>
+</ul>
+</li>
+<li><p>常用<code>path</code>方法</p>
+<ul>
+<li><p>获取目录中文件名部分，第二个参数隐藏文件后缀</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.basename(<span class="string">'c:/a/b/c/index.js'</span>) <span class="comment">// index.js</span></span><br><span class="line">path.basename(<span class="string">'c:/a/b/c/index.js'</span>,<span class="string">'.js'</span>) <span class="comment">// index</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取目录名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.dirname(<span class="string">'c:/a/b/c/index.js'</span>) <span class="comment">// 'c:/a/b/c'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取文件后缀</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.extname(<span class="string">'c:/a/b/c/index.js'</span>) <span class="comment">// .js</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断是否为绝对路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.isAbsolute(<span class="string">'c:/a/b/c/index.js'</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解析路径，将一个路径转换为一个对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">path.parse(<span class="string">'c:/a/b/c/index.js'</span>)</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;root: 'c:/'</span></span><br><span class="line"><span class="comment"> dir: 'c:/a/b/c'</span></span><br><span class="line"><span class="comment"> base: 'index.js'</span></span><br><span class="line"><span class="comment"> ext: '.js'</span></span><br><span class="line"><span class="comment"> name: 'index'</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>路径拼接</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.join(<span class="string">'itcast'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c.css'</span>) <span class="comment">// itcast\\a\\b\\c.css </span></span><br><span class="line"><span class="comment">// windows 中的路径使用反斜杠，反斜杠有转义的意思。所以使用两个</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Node-中的其他成员"><a href="#Node-中的其他成员" class="headerlink" title="Node 中的其他成员"></a>Node 中的其他成员</h2><blockquote>
+<p>在每个模块中，除了<code>require</code>、<code>exports</code>等模块相关 API 之外，还有两个特殊的成员，这两个成员是动态获取的路径，会随着文件的位置变化而变化</p>
+</blockquote>
+<ul>
+<li><code>__dirname</code>：用来获取当前文件模块所属目录的绝对路径</li>
+<li><code>__filename</code>：用来获取当前文件的绝对路径</li>
+</ul>
+<h2 id="第三方模块"><a href="#第三方模块" class="headerlink" title="第三方模块"></a>第三方模块</h2><ul>
+<li><p><strong>什么是第三方模块</strong></p>
+<blockquote>
+<p>别人写好的、具有特定功能的，我们能直接使用的模块即第三方模块，由于第三方模块通常都是由多个文件组成并且被放置在一个文件夹中，所以又名包。</p>
+</blockquote>
+</li>
+<li><p><strong>存在形式</strong></p>
+<ul>
+<li>以<code>js</code>文件的形式存在，提供实现项目具体功能的<code>API</code>接口。</li>
+<li>以命令行工具形式存在，辅助项目开发。</li>
+</ul>
+</li>
+</ul>
+<h3 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h3><blockquote>
+<p><code>npm</code> (node package manager): node 的第三方模块管理工具</p>
+<p><a href="npmjs.com">官方网站</a></p>
+</blockquote>
+<ul>
+<li><p>常用命令</p>
+<ul>
+<li><p><code>npm install 模块名称 模块名称 模块名称</code>或者<code>npm i 模块名称…</code>：下载包</p>
+</li>
+<li><p><code>npm install 模块名称@版本号</code>：下载固定版本的包</p>
+</li>
+<li><p><code>--save</code></p>
+<p> 会在<code>package.json</code>文件中生成所安装模块的依赖信息<code>dependencies</code>，建议安装包时都加上来保存依赖项信息，简写<code>-S</code></p>
+<p> npm 5 版本以后可以不用加，默认会生成依赖信息</p>
+</li>
+<li><p><code>-g</code>：全局安装</p>
+</li>
+<li><p><code>--save-dev</code>：表示安装的包不是必须安装的，会将包的依赖单独写在<code>devDependencies</code>中</p>
+</li>
+<li><p>卸载</p>
+<p><code>npm uninstall package 模块名称</code>：只删除，如果有依赖项会依然保存，uninstall 可以简写成 <code>un</code></p>
+<p><code>npm uninstall --save</code>：删除的时候把依赖也删除</p>
+</li>
+<li><p>查看帮助</p>
+<p><code>npm --help</code>：查看所有的命令</p>
+<p><code>npm 命令 --help</code>：查看具体命令的使用帮助</p>
+</li>
+<li><p>升级：<code>npm install --global npm</code></p>
+</li>
+<li><p>查看 npm 配置信息：<code>npm config list</code> </p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="替换-npm-下载地址"><a href="#替换-npm-下载地址" class="headerlink" title="替换 npm 下载地址"></a>替换 npm 下载地址</h3><blockquote>
+<p>npm 默认的下载地址在国外，国内下载速度慢</p>
+<p>淘宝的开发团队把 npm 在国内做了一个备份，<span class="exturl" data-url="aHR0cDovL25wbS50YW9iYW8ub3JnLw==" title="http://npm.taobao.org/">网址<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<ul>
+<li><p><code>nrm</code> (npm registry manager) : npm 下载地址切换工具（解决 npm 下载速度慢）</p>
+<p>使用步骤：</p>
+<ol>
+<li>使用 <code>npm install nrm -g</code> 下载它</li>
+<li>查询可用下载地址列表 <code>nrm ls</code></li>
+<li>切换 <code>npm</code> 下载地址 <code>nrm use</code> 下载地址名称 (推荐使用<code>taobao</code>)</li>
+</ol>
+</li>
+<li><p>使用 <code>cnpm</code>：</p>
+<ol>
+<li><p><code>npm install cnpm -g</code>安装 cnpm</p>
+</li>
+<li><p>下载包时使用 cnpm 代替 npm</p>
+</li>
+</ol>
+</li>
+<li><p>配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 每次安装时在后面加入 --registry=https://registry.npm.taobao.org</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 或在配置文件中加入，一劳永逸</span></span><br><span class="line">npm config set registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="nodemon"><a href="#nodemon" class="headerlink" title="nodemon"></a>nodemon</h3><blockquote>
+<p><code>nodemon</code> 是一个命令行工具，用以辅助项目开发。在 Node.js 中，每次修改文件都要在命令行工具中重新执行该文件，非常繁琐。</p>
+</blockquote>
+<p>使用步骤：</p>
+<ol>
+<li>下载： <code>npm install nodemon -g</code> </li>
+<li>在命令行工具中用 nodemon 命令替代 node 命令执行文件</li>
+<li>终止使用 <code>Ctrl + c</code></li>
+</ol>
+<h3 id="Gulp"><a href="#Gulp" class="headerlink" title="Gulp"></a>Gulp</h3><blockquote>
+<p>基于node平台开发的前端构建工具，将机械化操作编写成任务，想要执行机械化操作时执行一个命令任务就能自动执行了，用机器代替手工，提高开发效率。</p>
+</blockquote>
+<ul>
+<li><p>安装：  <code>npm install gulp-cli -g</code></p>
+</li>
+<li><p>Gulp作用</p>
+<ul>
+<li>项目上线，HTML，CSS，JS文件压缩合并</li>
+<li>语法转换(es6、less…)</li>
+<li>公共文件抽离</li>
+</ul>
+</li>
+<li><p>修改文件浏览器自动刷新</p>
+</li>
+<li><p>Gulp使用</p>
+<ol>
+<li>使用 <code>npm install gulp</code> 下载 gulp 库文件</li>
+<li>在项目更目录下建立 <code>gulpfile.js</code>文件</li>
+<li>重构项目的文件夹结构 src 目录放置源代码文件 dist 目录放置构建后文件</li>
+<li>在 <code>gulpfile.js</code> 文件中编写任务</li>
+<li>在命令行工具中执行 gulp 文件</li>
+</ol>
+</li>
+<li><p>gulp 中提供的方法</p>
+<ul>
+<li><code>gulp.src()</code>：获取任务要处理的文件</li>
+<li><code>gulp.dest()</code>：输出文件</li>
+<li><code>gulp.task()</code>：建立gulp任务</li>
+<li><code>gulp.watch()</code>：监控文件的变化</li>
+</ul>
+<p>通过命令行运行代码：<code>gulp first</code></p>
+</li>
+<li><p>gulp插件</p>
+<ul>
+<li><code>gulp-htmlmin</code>：HTML 文件压缩</li>
+<li><code>gulp-csso</code>：压缩 css</li>
+<li><code>gulp-babel</code>：JavaScript 语法转换</li>
+<li><code>gulp-less</code>：less语法转换</li>
+<li><code>gulp-uglify</code>：压缩混淆 JavaScript</li>
+<li><code>gulp-file-include</code>：公共文件包含</li>
+<li><code>browsersync</code>：浏览器实时同步</li>
+</ul>
+</li>
+<li><p>gulp插件使用流程（配合npmjs.com 官网使用）</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引用模块</span></span><br><span class="line"><span class="keyword">const</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="keyword">const</span> htmlmin = <span class="built_in">require</span>(<span class="string">'gulp-htmlmin'</span>);</span><br><span class="line"><span class="keyword">const</span> fileinclude = <span class="built_in">require</span>(<span class="string">'gulp-file-include'</span>);</span><br><span class="line"><span class="keyword">const</span> less = <span class="built_in">require</span>(<span class="string">'gulp-less'</span>);</span><br><span class="line"><span class="keyword">const</span> csso = <span class="built_in">require</span>(<span class="string">'gulp-csso'</span>);</span><br><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">'gulp-babel'</span>);</span><br><span class="line"><span class="keyword">const</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</span><br><span class="line"><span class="comment">// 建立任务</span></span><br><span class="line">gulp.task(<span class="string">'first'</span>, (done) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个任务'</span>);</span><br><span class="line">  <span class="comment">// 获取要处理的文件</span></span><br><span class="line">  gulp.src(<span class="string">'./src/demo.js'</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'./dist/css'</span>));</span><br><span class="line">  done();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// html任务</span></span><br><span class="line"><span class="comment">// 通过gulp插件压缩代码</span></span><br><span class="line">gulp.task(<span class="string">'htmlmin'</span>, (done) =&gt; &#123;</span><br><span class="line">  gulp.src(<span class="string">'./src/*.html'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//抽取html文件中的公共代码</span></span><br><span class="line">    .pipe(fileinclude())</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过gulp插件压缩代码</span></span><br><span class="line">    .pipe(htmlmin(&#123;</span><br><span class="line">      collapseWhitespace: <span class="literal">true</span></span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">//输出到dist文件夹</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">'dist'</span>));</span><br><span class="line">  done();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// css任务</span></span><br><span class="line">gulp.task(<span class="string">'cssmin'</span>, (done) =&gt; &#123;</span><br><span class="line">  gulp.src(<span class="string">'./src/css/a.less'</span>)</span><br><span class="line">    <span class="comment">//less转css</span></span><br><span class="line">    .pipe(less())</span><br><span class="line">    <span class="comment">//压缩css代码</span></span><br><span class="line">    .pipe(csso())</span><br><span class="line">    <span class="comment">//结果输出</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">'dist/css'</span>))</span><br><span class="line">  done();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//js任务</span></span><br><span class="line">gulp.task(<span class="string">'jsmin'</span>, (done) =&gt; &#123;</span><br><span class="line">  gulp.src(<span class="string">'./src/demo.js'</span>)</span><br><span class="line">    <span class="comment">// 语法转换</span></span><br><span class="line">    .pipe(babel(&#123;</span><br><span class="line">      <span class="comment">// @babel/env可以判断当前代码的运行环境，将代码转换成当前运行环境所支持的代码</span></span><br><span class="line">      presets: [<span class="string">'@babel/env'</span>]</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">// 压缩</span></span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    <span class="comment">// 结果输出</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">'dist/js'</span>))</span><br><span class="line">  done();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 复制文件夹</span></span><br><span class="line">gulp.task(<span class="string">'copy'</span>, (done) =&gt; &#123;</span><br><span class="line">  gulp.src(<span class="string">'./src/images/*'</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'dist/images'</span>));</span><br><span class="line">    done();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构建任务,执行default时，依次执行任务</span></span><br><span class="line">gulp.task(<span class="string">'default'</span>, gulp.series(<span class="string">'htmlmin'</span>, <span class="string">'cssmin'</span>,<span class="string">'jsmin'</span>,<span class="string">'copy'</span>, done =&gt; done()));</span><br></pre></td></tr></table></figure>
+
+<h3 id="package-json文件"><a href="#package-json文件" class="headerlink" title="package.json文件"></a>package.json文件</h3><blockquote>
+<ul>
+<li>包描述文件，记录了当前项目的信息，eg 项目名称、版本、作者、github地址、当前项目依赖了哪些第三方模块等，建议每一个项目都要有一个</li>
+<li>通过 <code>npm init -y</code>生成 ，<code>-y</code>代表生成默认信息，不加的话需要逐条手动填写信息</li>
+<li>通过<code>npm install</code>能把<code>package.json</code>中的<code>dependencies</code>中所有的依赖项都下载下来</li>
+</ul>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> 文件会记录npm下载的模块</span><br><span class="line"> </span><br><span class="line">"name": "demo",      ---项目名称</span><br><span class="line">"version": "1.0.0",  ---项目版本</span><br><span class="line">"description": "",   ---项目描述</span><br><span class="line">"main": "index.js",   ---主入口文件，主模块</span><br><span class="line"></span><br><span class="line">  "scripts": &#123;          </span><br><span class="line">    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1" ---存储命令的别名，使用 npm+run+别名 使用</span><br><span class="line">  &#125;,                  </span><br><span class="line"></span><br><span class="line">  "keywords": [],     ---使用关键字描述项目</span><br><span class="line">  "author": "",       ---项目作者</span><br><span class="line">  "license": "ISC"      ---遵循的协议，默认isc：开放源代码</span><br><span class="line"></span><br><span class="line"> "dependencies": &#123;</span><br><span class="line">    "csso": "^4.0.2"	---通过npm install下载的模块（项目依赖），还原使用npm install --production命令进行下载，不下载`devDependencies`中的依赖</span><br><span class="line">  &#125;</span><br><span class="line">	"devDependencies": &#123;</span><br><span class="line">    "gulp": "^3.9.1"	---通过 --save-dev下载的模块（开发依赖），可以使用npm install 命令进行下载</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200122130426646.png" alt="image-20200122130426646.png"><br><img src="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200122130538922.png" alt="image-20200122130538922.png"></p>
+<p>通过命令<code>npm install</code>可以下载项目所需要的所有的依赖</p>
+<p><code>npm install --production</code> 下载项目运行所需要的依赖，而不下载开发依赖</p>
+<h3 id="package-lock-json文件"><a href="#package-lock-json文件" class="headerlink" title="package-lock.json文件"></a>package-lock.json文件</h3><blockquote>
+<p>npm 版本 5 以前没有这个文件，5 后面版本会自动生成这个文件</p>
+<p>当你安装包的时候，会自动更新这个文件</p>
+<p>当下载模块后会自动生成，主要记录模块与模块之间的依赖关系，保存了所有包的信息，有这个文件重载 node_modules 时会更快</p>
+<p>锁定包的版本号，防止自动升级到新版</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">"dependencies": &#123;</span><br><span class="line">    "@babel/code-frame": &#123;</span><br><span class="line">      "version": "7.8.3", ---版本</span><br><span class="line">      "resolved": "https://registry.npm.taobao.org/@babel/code-frame/download/@babel/code-frame-7.8.3.tgz", ---地址</span><br><span class="line">      "integrity": "sha1-M+JZA9dIEYFTThLsCiXxa2/PQZ4=",</span><br><span class="line">      "requires": &#123;</span><br><span class="line">        "@babel/highlight": "^7.8.3"</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="创建web服务器"><a href="#创建web服务器" class="headerlink" title="创建web服务器"></a>创建web服务器</h1><h2 id="IP地址和端口号"><a href="#IP地址和端口号" class="headerlink" title="IP地址和端口号"></a>IP地址和端口号</h2><ul>
+<li>IP地址用来定位计算机</li>
+<li>端口号来定位具体的应用程序</li>
+<li>一切需要联网通信的软件都会占用一个端口号</li>
+<li>端口号的范围从 0 - 65536 之间</li>
+<li>在计算机中有一些默认端口号，最好不要去使用 eg：http 服务中的 80</li>
+<li>我们在开发过程中使用一些简单好记的就可以了，例如3000，5000等没什么含义的</li>
+<li>可以同时开启多个服务，但一定要确保不同服务端口号不一致才可以，在一台计算机中，同一个端口号同一时间只能被一个程序占用</li>
+</ul>
+<h2 id="建立服务器"><a href="#建立服务器" class="headerlink" title="建立服务器"></a>建立服务器</h2><ul>
+<li><p>nodejs是基于事件驱动的语言，当客户端有请求的时候，这个请求在服务端是通过事件来触发的</p>
+</li>
+<li><p>在服务端默认发送的数据，其实是 utf8 编码的内容，但是浏览器不知道你是 utf8 编码内容，此时浏览器会按照当前操作系统的默认编码(gbk)去解析，所以中文就会乱码</p>
+<p>解决：<code>res.setHeader(&#39;Content-Type&#39;, &#39;text/plain; charset=utf-8&#39;)</code>，图片格式的内容不需要设置编码格式，会报错</p>
+</li>
+<li><p>Content-Type：不同的资源对应的 Content-Type 是不一样的</p>
+<p> 图片类型不需要指定编码，一般只为字符数据才指定编码格式</p>
+<p> 类型选择对照表：<span class="exturl" data-url="aHR0cHM6Ly90b29sLm9zY2hpbmEubmV0Lw==" title="https://tool.oschina.net/">https://tool.oschina.net/<i class="fa fa-external-link"></i></span> –&gt; HTTP Mine-type</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用于创建网站服务器的系统模块</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// app对象就是网站服务器对象</span></span><br><span class="line"><span class="keyword">const</span> app = http.createServer()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过on为网站服务器对象添加请求对象，请求名称为request，当有请求的时候，执行后面的事件处理函数,req中保存着请求相关的信息，通过res对象下的方法对客户端进行响应</span></span><br><span class="line">app.on(<span class="string">'request'</span>, (req,res) =&gt; &#123;</span><br><span class="line">  <span class="comment">// req.method来获取请求方式</span></span><br><span class="line">  <span class="comment">//req.url 来获取请求地址，默认是 /</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//告诉浏览器编码格式</span></span><br><span class="line">  res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/plain; charset=utf-8'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">//res.end后的响应内容只能是二进制数据或者字符串(JSON.stringifoy转换)</span></span><br><span class="line">  res.end(<span class="string">'&lt;h2&gt;hello user&lt;/h2&gt;'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//网站服务器建立好后，必须要监听一个端口来对外进行服务</span></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'网站服务器启动成功！'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//上面的简写方式</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line">http</span><br><span class="line">  .createServer(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.end(<span class="string">'hello'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'running...'</span>);</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200122141535489.png" alt="image-20200122141535489.png"><br><img src="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200122141600511.png" alt="image-20200122141600511.png"></p>
+<h2 id="url"><a href="#url" class="headerlink" title="url"></a>url</h2><blockquote>
+<p><code>url.parse(地址,true)</code>：解析地址中的内容，得到的是一个 url 对象</p>
+<p>true：将对象中的 query 的值(字符串)转换成对象</p>
+<p>pathname：路径中 ? 之前的路径内容</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="keyword">var</span> a = url.parse(<span class="string">'http://localhost:8080/one?a=index&amp;t=article'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果：</span></span><br><span class="line">&#123; </span><br><span class="line">    protocol : <span class="string">'http'</span> ,</span><br><span class="line">    auth : <span class="literal">null</span> ,</span><br><span class="line">    host : <span class="string">'localhost:8080'</span> ,</span><br><span class="line">    port : <span class="string">'8080'</span> ,</span><br><span class="line">    hostname : <span class="string">'localhost'</span> ,</span><br><span class="line">    hash : <span class="literal">null</span> ,</span><br><span class="line">    search : <span class="string">'?a=index&amp;t=article'</span>,</span><br><span class="line">    query : <span class="string">'a=index&amp;t=article'</span>,</span><br><span class="line">    pathname : <span class="string">'/one'</span>,</span><br><span class="line">    path : <span class="string">'/one?a=index&amp;t=article'</span>,</span><br><span class="line">    href : <span class="string">'http://localhost:8080/one?a=index&amp;t=article'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>JSON.stringfy()</code>：将 JavaScript 对象转换为字符串，也可以将 JavaScript 数组转换为 JSON 字符串</p>
+</blockquote>
+<blockquote>
+<p><code>req.method</code> 来获取请求方式<br><code>req.url</code> 来获取请求地址<br><code>req.headers</code> 获取请求报文（res.headers[‘accept’]）<br><code>res.writeHead(200,&#39;content-type&#39;: &#39;text/html;charset=utf8&#39;)</code> 编写响应报文的信息</p>
+</blockquote>
+<h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><blockquote>
+<p>如何通过服务器让客户端重定向？</p>
+<ol>
+<li>状态码设置成 302 (临时重定向)，301是永久重定向</li>
+<li>在响应头中通过 <code>Location</code> 告诉客户端往哪儿重定向</li>
+</ol>
+<p>如果客户端发现收到服务器的响应的状态码是 302 就会自动去响应头中找 Location ，然后对该地址发起新的请求</p>
+<p>服务端重定向只针对同步请求才有效，异步请求无效，这时候可以使用客户端跳转：<code>window.location.href = &#39;/&#39;</code></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法一：</span></span><br><span class="line">res.statusCode = <span class="number">302</span></span><br><span class="line">res.setHeader(<span class="string">'Location'</span>, <span class="string">'/'</span>)</span><br><span class="line"><span class="comment">// 方法二：</span></span><br><span class="line">res.redirect(<span class="string">'/'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例：留言板"><a href="#案例：留言板" class="headerlink" title="案例：留言板"></a>案例：留言板</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> template = <span class="built_in">require</span>(<span class="string">'art-template'</span>)</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> comments = [&#123;</span><br><span class="line">    name: <span class="string">'张三'</span>,</span><br><span class="line">    message: <span class="string">'今天天气不错！'</span>,</span><br><span class="line">    datatime: <span class="string">'2020-10-14'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'李四'</span>,</span><br><span class="line">    message: <span class="string">'今天天气不错！+1'</span>,</span><br><span class="line">    datatime: <span class="string">'2020-10-14'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'王五'</span>,</span><br><span class="line">    message: <span class="string">'今天天气不错！+2'</span>,</span><br><span class="line">    datatime: <span class="string">'2020-10-14'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'钢蛋'</span>,</span><br><span class="line">    message: <span class="string">'今天天气不错！+3'</span>,</span><br><span class="line">    datatime: <span class="string">'2020-10-14'</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">http</span><br><span class="line">  .createServer(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 得到路径对象</span></span><br><span class="line">    <span class="keyword">let</span> parseObj = url.parse(req.url, <span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">let</span> pathname = parseObj.pathname</span><br><span class="line">    <span class="keyword">if</span> (pathname === <span class="string">'/'</span> || pathname === <span class="string">'/index'</span>) &#123;</span><br><span class="line">      fs.readFile(<span class="string">'./views/index.html'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">          <span class="keyword">return</span> res.end(<span class="string">'404 Not Found'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 渲染</span></span><br><span class="line">        <span class="keyword">var</span> htmlStr = template.render(data.toString(), &#123;</span><br><span class="line">          comments: comments</span><br><span class="line">        &#125;)</span><br><span class="line">        res.end(htmlStr)</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="comment">// 设置请求资源文件路径，公开静态资源目录public</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pathname.indexOf(<span class="string">'/public/'</span>) === <span class="number">0</span>) &#123;</span><br><span class="line">      fs.readFile(<span class="string">'.'</span> + pathname, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">          <span class="keyword">return</span> res.end(<span class="string">'404 Not Found'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        res.end(data)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pathname === <span class="string">'/post'</span>) &#123;</span><br><span class="line">      fs.readFile(<span class="string">'./views/post.html'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">          <span class="keyword">return</span> res.end(<span class="string">'404 Not Found'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        res.end(data)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pathname === <span class="string">'/comment'</span>) &#123;</span><br><span class="line">        <span class="comment">// 将当前时间日期添加到数据对象中，然后存储到数组中</span></span><br><span class="line">        <span class="keyword">let</span> comment = parseObj.query</span><br><span class="line">        comment.datatime = <span class="string">'2019-11-2 15:11:12'</span></span><br><span class="line">        comments.unshift(comment)</span><br><span class="line">        <span class="comment">// 重定向(设置状态码和响应头)</span></span><br><span class="line">        res.statusCode = <span class="number">302</span></span><br><span class="line">        res.setHeader(<span class="string">'Location'</span>, <span class="string">'/'</span>)</span><br><span class="line">        res.end()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fs.readFile(<span class="string">'./views/404.html'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">          <span class="keyword">return</span> res.end(<span class="string">'404 Not Found'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        res.end(data)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  .listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'running...'</span>);</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Express框架"><a href="#Express框架" class="headerlink" title="Express框架"></a>Express框架</h1><blockquote>
+<p>原生的 http 在某些方面表现不足以应对我们的开发需求，所以我们就需要使用框架来加快我们的开发效率，框架的目的就是提高效率，让我们的代码更高度统一</p>
+<p>在 Node 中，有很多 Web 开发框架，我们这里以学习 express 为主</p>
+<p><span class="exturl" data-url="aHR0cDovL2V4cHJlc3Nqcy5jb20v" title="http://expressjs.com/">官方网址<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express --save</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a>hello world</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const express = require('express')</span><br><span class="line"></span><br><span class="line">let app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 公开指定目录，可以通过 /public/xx 的方式访问 public 目录中的所有资源</span></span><br><span class="line">app.use('/public/', express.static('./public/'))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基本路由，当服务器收到 get 请求 / 的时候，执行</span></span><br><span class="line">app.get('/', function (req, res) &#123;  </span><br><span class="line">  res.send('hello world!')</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基本路由，当服务器收到 post 请求 / 的时候，执行</span></span><br><span class="line">app.post('/', function (req, res) &#123;  </span><br><span class="line">  res.send('hello world!')</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(3000, function () &#123;  </span><br><span class="line">  console.log('running~');</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="接收表单数据"><a href="#接收表单数据" class="headerlink" title="接收表单数据"></a>接收表单数据</h3><ul>
+<li><p><code>get</code>请求</p>
+<blockquote>
+<p>express 内置了一个 API ，可以直接通过 <code>req.query</code>来获取</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/comment'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取 url 地址中传递的参数</span></span><br><span class="line">  <span class="keyword">let</span> comment = req.query</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>post</code>请求</p>
+<blockquote>
+<p>在 Express 中没有内置获取表单 POST 请求体的 API ，这里我们需要使用一个第三方包：<code>body-parser</code></p>
+<p><span class="exturl" data-url="aHR0cDovL2V4cHJlc3Nqcy5jb20vZW4vcmVzb3VyY2VzL21pZGRsZXdhcmUvYm9keS1wYXJzZXIuaHRtbA==" title="http://expressjs.com/en/resources/middleware/body-parser.html">官方文档<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<ul>
+<li><p>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save body-parser</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="comment">// 引包</span></span><br><span class="line"><span class="keyword">var</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>)</span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置 body-parser</span></span><br><span class="line"><span class="comment">// 只要加入这个配置，则在 req 请求对象上会多出来一个属性：body，通过 req.body 来获取表单 POST 请求体数据了</span></span><br><span class="line"><span class="comment">// parse application/x-www-form-urlencoded</span></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;))</span><br><span class="line">app.use(bodyParser.json())</span><br><span class="line"><span class="comment">// 第二种方式</span></span><br><span class="line"><span class="keyword">var</span> jsonParser = bodyParser.json()</span><br><span class="line"><span class="keyword">var</span> urlencodedParser = bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="comment">// POST /login gets urlencoded bodies</span></span><br><span class="line">app.post(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'welcome, '</span> + req.body.username)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// POST /api/users gets JSON bodies</span></span><br><span class="line">    app.post(<span class="string">'/api/users'</span>, jsonParser, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="路由处理"><a href="#路由处理" class="headerlink" title="路由处理"></a>路由处理</h3></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>将所有路由代码单独写到一个文件中</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件 router.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="comment">// 创建一个路由容器</span></span><br><span class="line"><span class="keyword">let</span> router = express.Router()</span><br><span class="line"><span class="comment">// 把路由都挂载到 router 路由容器中</span></span><br><span class="line">router.get(<span class="string">'./student'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;&#125;)</span><br><span class="line"><span class="comment">// 将 router 导出</span></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br><span class="line"></span><br><span class="line"><span class="comment">// 文件 app.js 挂载路由</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'./router'</span>)</span><br><span class="line"><span class="comment">// 挂载 放到配置信息后面</span></span><br><span class="line">app.use(router)</span><br></pre></td></tr></table></figure>
+
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><blockquote>
+<p>在 Express 这个框架中，默认不支持 Session 和 Cookie，但是我们可以使用第三方中间件：<code>express-session</code>来解决。</p>
+</blockquote>
+<ul>
+<li><p>安装：<code>npm install express-session</code></p>
+</li>
+<li><p>使用：</p>
+<p>添加 Session 数据：<code>req.session.foo = &#39;bar&#39;</code></p>
+<p>访问 Session 数据：<code>req.session.foo</code></p>
+<p>清除：<code>req.session.foo = null</code>,对象还在<br>删除：<code>delete req.session.xxx</code></p>
+<p>Session 数据是存储在内存中的，服务器重启后就会消失，真正的生产环境会进行持久化存储</p>
+<p><code>secret</code>: 配置加密字符串，它会在原有加密基础之上和这个字符串拼起来其加密，目的是为了增加安全性，防止客户端恶意伪造</p>
+<p><code>saveUninitialized</code>: 决定是否默认分配一把钥匙。默认为 true</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置 session </span></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">  secret: <span class="string">'keyboard cat'</span>,</span><br><span class="line">  resave: <span class="literal">false</span>,</span><br><span class="line">  saveUninitialized: <span class="literal">false</span> </span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><p>当请求进来，会从第一个中间件开始进行匹配，如果匹配则进来，如果进入了却没有调用 next 则不会进行下一个<br>在 Express 中，对中间件有几种分类</p>
+<ol>
+<li><p>不关心请求路径和请求方法的中间件,也就是说任何请求都会进入这个中间件,中间件本身是一个方法，该方法接受三个参数</p>
+<ul>
+<li><p><code>Request</code> 请求对象</p>
+</li>
+<li><p><code>Response</code> 响应对象</p>
+</li>
+<li><p><code>next</code> 下一个中间件,不加这个会默认执行第一个，不会往下执行，加上会执行下一个中间件，next 可以进行匹配调用后面的，而不是一定是执行紧挨着的下一个</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'1'</span>)</span><br><span class="line">  next()</span><br><span class="line">&#125;)</span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'2'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//1 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// next 传错误对象</span></span><br><span class="line"> app.use(<span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'1'</span>)</span><br><span class="line">  next(err)</span><br><span class="line">&#125;)</span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'2'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span> (<span class="params">err, req, res, next</span>) </span>&#123;  </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'错误信息'</span>)</span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 输出为：错误信息</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>以 /xx 开头的路径中间件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以 /b 开头的路径都可以访问</span></span><br><span class="line">app.use(<span class="string">'/b'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">req,res, next</span>) </span>&#123;  </span><br><span class="line">  <span class="built_in">console</span>.log(req.url) <span class="comment">// /b 后面的路径</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>严格匹配请求方法和请求路径的中间件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;  &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ol>
+<h2 id="案例：留言板-1"><a href="#案例：留言板-1" class="headerlink" title="案例：留言板"></a>案例：留言板</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>)</span><br><span class="line"><span class="keyword">let</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> comments = [&#123;</span><br><span class="line">    name: <span class="string">'张三'</span>,</span><br><span class="line">    message: <span class="string">'今天天气不错！'</span>,</span><br><span class="line">    datatime: <span class="string">'2020-10-14'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'李四'</span>,</span><br><span class="line">    message: <span class="string">'今天天气不错！+1'</span>,</span><br><span class="line">    datatime: <span class="string">'2020-10-14'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'王五'</span>,</span><br><span class="line">    message: <span class="string">'今天天气不错！+2'</span>,</span><br><span class="line">    datatime: <span class="string">'2020-10-14'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'钢蛋'</span>,</span><br><span class="line">    message: <span class="string">'今天天气不错！+3'</span>,</span><br><span class="line">    datatime: <span class="string">'2020-10-14'</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置模板引擎</span></span><br><span class="line">app.engine(<span class="string">'html'</span>, <span class="built_in">require</span>(<span class="string">'express-art-template'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置接受 post 请求体</span></span><br><span class="line"><span class="keyword">var</span> jsonParser = bodyParser.json()</span><br><span class="line"><span class="keyword">var</span> urlencodedParser = bodyParser.urlencoded(&#123;</span><br><span class="line">  extended: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 开放文件资源</span></span><br><span class="line">app.use(<span class="string">'/public/'</span>, express.static(<span class="string">'./public/'</span>))</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'index.html'</span>, &#123;</span><br><span class="line">    comments: comments</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/post'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'post.html'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/index'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'index.html'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受 get 提交的请求</span></span><br><span class="line"><span class="comment">// app.get('/comment',function (req, res) &#123;</span></span><br><span class="line"><span class="comment">//   // 获取 url 地址中传递的参数</span></span><br><span class="line"><span class="comment">//   let comment = req.query</span></span><br><span class="line"><span class="comment">//   comments.datatime = '2012-12-3'</span></span><br><span class="line"><span class="comment">//   comments.unshift(comment)</span></span><br><span class="line"><span class="comment">//   // 重定向</span></span><br><span class="line"><span class="comment">//   res.redirect('/')</span></span><br><span class="line"><span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受 post 提交的请求</span></span><br><span class="line">app.post(<span class="string">'/comment'</span>, urlencodedParser,<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取 请求体中的数据</span></span><br><span class="line">  <span class="keyword">let</span> comment = req.body</span><br><span class="line">  comments.datatime = <span class="string">'2012-12-3'</span></span><br><span class="line">  comments.unshift(comment)</span><br><span class="line">  <span class="comment">// 重定向</span></span><br><span class="line">  res.redirect(<span class="string">'/'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'running!'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例：crud"><a href="#案例：crud" class="headerlink" title="案例：crud"></a>案例：crud</h2><blockquote>
+<p>实现文件的增删改查</p>
+</blockquote>
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="https://raw.githubusercontent.com/iamyujian/PicGo/master/img/image-20200208212828302.png" alt="image-20200208212828302.png"></p>
+<h3 id="文档结构图"><a href="#文档结构图" class="headerlink" title="文档结构图"></a>文档结构图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">crud-express</span><br><span class="line">│  app.js				───────────── 项目启动文件</span><br><span class="line">│  db.json			───────────── 数据文件</span><br><span class="line">│  operate-data.js	───────── 数据操作文件</span><br><span class="line">│  package-lock.json	───────	项目依赖</span><br><span class="line">│  package.json	─────────────	项目信息</span><br><span class="line">│  </span><br><span class="line">├─node_modules	─────────────	包</span><br><span class="line">│          </span><br><span class="line">├─public				─────────────	公用文件</span><br><span class="line">│  ├─css</span><br><span class="line">│  │      dashboard.css</span><br><span class="line">│  │      </span><br><span class="line">│  └─js</span><br><span class="line">│          router.js ──────── 路由文件</span><br><span class="line">│          </span><br><span class="line">└─views		───────────────────	视图文件夹</span><br><span class="line">        add.html ──────────── 数据添加页面</span><br><span class="line">        edit.html	─────────── 修改页面</span><br><span class="line">        index.html	───────── 入口页面</span><br></pre></td></tr></table></figure>
+
+<h3 id="项目依赖"><a href="#项目依赖" class="headerlink" title="项目依赖"></a>项目依赖</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">"dependencies": &#123;</span><br><span class="line">    "art-template": "^4.13.2",</span><br><span class="line">    "body-parser": "^1.19.0",</span><br><span class="line">    "bootstrap": "^3.3.7",</span><br><span class="line">    "express": "^4.17.1",</span><br><span class="line">    "express-art-template": "^1.0.1"</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由设计"><a href="#路由设计" class="headerlink" title="路由设计"></a>路由设计</h3><table>
+<thead>
+<tr>
+<th align="center">请求方法</th>
+<th align="center">请求路径</th>
+<th align="center">get 参数</th>
+<th align="center">post 参数</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">GET</td>
+<td align="center">/</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">渲染首页</td>
+</tr>
+<tr>
+<td align="center">GET</td>
+<td align="center">/add</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">渲染添加页面</td>
+</tr>
+<tr>
+<td align="center">POST</td>
+<td align="center">/add</td>
+<td align="center"></td>
+<td align="center">name、age、gender、hobbies</td>
+<td align="center">处理添加请求</td>
+</tr>
+<tr>
+<td align="center">GET</td>
+<td align="center">/edit</td>
+<td align="center">id</td>
+<td align="center"></td>
+<td align="center">渲染编辑页面</td>
+</tr>
+<tr>
+<td align="center">POST</td>
+<td align="center">/edit</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">处理编辑请求</td>
+</tr>
+<tr>
+<td align="center">GET</td>
+<td align="center">/delete</td>
+<td align="center">id</td>
+<td align="center">name、age、gender、hobbies</td>
+<td align="center">处理删除请求</td>
+</tr>
+</tbody></table>
+<h3 id="views"><a href="#views" class="headerlink" title="views"></a>views</h3><h4 id="head信息"><a href="#head信息" class="headerlink" title="head信息"></a>head信息</h4><blockquote>
+<p>所有 html 页面头信息一样</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"description"</span> <span class="attr">content</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"author"</span> <span class="attr">content</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"icon"</span> <span class="attr">href</span>=<span class="string">"../../favicon.ico"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Dashboard Template for Bootstrap<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Bootstrap core CSS --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"/node_modules/bootstrap/dist/css/bootstrap.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"/public/css/dashboard.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container-fluid"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"sub-header"</span>&gt;</span>Section title<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/add"</span> <span class="attr">class</span>=<span class="string">"btn btn-success"</span>&gt;</span>添加信息<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"table-responsive"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table table-striped"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>#<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>性别<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>年龄<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>爱好<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>操作<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">          &#123;&#123; each students &#125;&#125;</span><br><span class="line">          <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.id &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.name &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.gender &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.age &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.hobbies &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/edit?id=&#123;&#123; $value.id &#125;&#125;"</span>&gt;</span>编辑<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/delete?id=&#123;&#123; $value.id &#125;&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">          &#123;&#123;/each&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="add-html"><a href="#add-html" class="headerlink" title="add.html"></a>add.html</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container-fluid"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"sub-header"</span>&gt;</span>添加信息<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"/add"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"names"</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"names"</span> <span class="attr">minlength</span>=<span class="string">"2"</span> <span class="attr">maxlength</span>=<span class="string">"6"</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">""</span>&gt;</span>性别：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"radio-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">id</span>=<span class="string">"man"</span> <span class="attr">value</span>=<span class="string">"男"</span>&gt;</span> 男</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"radio-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">id</span>=<span class="string">"girl"</span> <span class="attr">value</span>=<span class="string">"女"</span>&gt;</span> 女</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"age"</span>&gt;</span>年龄<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"number"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"age"</span> <span class="attr">maxlength</span>=<span class="string">"2"</span> <span class="attr">name</span>=<span class="string">"age"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">""</span>&gt;</span>爱好：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"checkbox-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"inlineCheckbox1"</span> <span class="attr">value</span>=<span class="string">"吃饭"</span> <span class="attr">name</span>=<span class="string">"hobbies"</span>&gt;</span> 吃饭</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"checkbox-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"inlineCheckbox2"</span> <span class="attr">value</span>=<span class="string">"睡觉"</span> <span class="attr">name</span>=<span class="string">"hobbies"</span>&gt;</span> 睡觉</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"checkbox-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"inlineCheckbox3"</span> <span class="attr">value</span>=<span class="string">"打豆豆"</span> <span class="attr">name</span>=<span class="string">"hobbies"</span>&gt;</span> 打豆豆</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-success"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="edit-html"><a href="#edit-html" class="headerlink" title="edit.html"></a>edit.html</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container-fluid"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"sub-header"</span>&gt;</span>添加信息<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"/edit"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 设置隐藏提交给服务器的信息 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"&#123;&#123; student.id &#125;&#125;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"names"</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"names"</span> <span class="attr">minlength</span>=<span class="string">"2"</span> <span class="attr">maxlength</span>=<span class="string">"6"</span> <span class="attr">name</span>=<span class="string">"name"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">value</span>=<span class="string">"&#123;&#123; student.name &#125;&#125;"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">""</span>&gt;</span>性别：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"radio-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">id</span>=<span class="string">"man"</span> <span class="attr">value</span>=<span class="string">"男"</span>&gt;</span> 男</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"radio-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">id</span>=<span class="string">"girl"</span> <span class="attr">value</span>=<span class="string">"女"</span>&gt;</span> 女</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"age"</span>&gt;</span>年龄<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"number"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"age"</span> <span class="attr">maxlength</span>=<span class="string">"2"</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"&#123;&#123; student.age &#125;&#125;"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">""</span>&gt;</span>爱好：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"checkbox-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"inlineCheckbox1"</span> <span class="attr">value</span>=<span class="string">"吃饭"</span> <span class="attr">name</span>=<span class="string">"hobbies"</span>&gt;</span> 吃饭</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"checkbox-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"inlineCheckbox2"</span> <span class="attr">value</span>=<span class="string">"睡觉"</span> <span class="attr">name</span>=<span class="string">"hobbies"</span>&gt;</span> 睡觉</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"checkbox-inline"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"inlineCheckbox3"</span> <span class="attr">value</span>=<span class="string">"打豆豆"</span> <span class="attr">name</span>=<span class="string">"hobbies"</span>&gt;</span> 打豆豆</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-success"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="db-json"><a href="#db-json" class="headerlink" title="db.json"></a>db.json</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"students"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"id"</span>: <span class="number">2</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"张三"</span>,</span><br><span class="line">      <span class="attr">"gender"</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">"age"</span>: <span class="number">18</span>,</span><br><span class="line">      <span class="attr">"hobbies"</span>: <span class="string">"吃饭、睡觉、打豆豆"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"id"</span>: <span class="number">3</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"张三"</span>,</span><br><span class="line">      <span class="attr">"gender"</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">"age"</span>: <span class="number">18</span>,</span><br><span class="line">      <span class="attr">"hobbies"</span>: <span class="string">"吃饭、睡觉、打豆豆"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'./public/js/router'</span>)</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = express()</span><br><span class="line"><span class="comment">// 配置模板引擎</span></span><br><span class="line">app.engine(<span class="string">'html'</span>, <span class="built_in">require</span>(<span class="string">'express-art-template'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置body-parser</span></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;))</span><br><span class="line">app.use(bodyParser.json())</span><br><span class="line"></span><br><span class="line"><span class="comment">// 挂载路由</span></span><br><span class="line">app.use(router)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'running...'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="router-js"><a href="#router-js" class="headerlink" title="router.js"></a>router.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> operate_data = <span class="built_in">require</span>(<span class="string">'../../operate-data'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成路由容器</span></span><br><span class="line"><span class="keyword">let</span> router = express.Router()</span><br><span class="line"></span><br><span class="line"><span class="comment">//开放资源文件夹</span></span><br><span class="line">router.use(<span class="string">'/node_modules/'</span>,express.static(<span class="string">'./node_modules/'</span>))</span><br><span class="line">router.use(<span class="string">'/public/'</span>, express.static(<span class="string">'./public/'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 渲染首页</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 这里将数据操作封装成函数调用</span></span><br><span class="line">  operate_data.find(<span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.status(<span class="number">500</span>).send(<span class="string">'Server error.'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    res.render(<span class="string">'index.html'</span>, &#123;</span><br><span class="line">      <span class="comment">// data数据是字符串，转成对象</span></span><br><span class="line">      students: data</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 渲染添加页面</span></span><br><span class="line">router.get(<span class="string">'/add'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'add.html'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理添加请求</span></span><br><span class="line">router.post(<span class="string">'/add'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> student = req.body</span><br><span class="line">  operate_data.save(student, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.status(<span class="number">500</span>).send(<span class="string">'Server error.'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    res.redirect(<span class="string">'/'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 渲染编辑页面</span></span><br><span class="line">router.get(<span class="string">'/edit'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  operate_data.findById(<span class="built_in">parseInt</span>(req.query.id), <span class="function"><span class="keyword">function</span> (<span class="params">err, student</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.status(<span class="number">500</span>).send(<span class="string">'Server error.'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    res.render(<span class="string">'edit.html'</span>, &#123;</span><br><span class="line">      student: student</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理编辑请求</span></span><br><span class="line">router.post(<span class="string">'/edit'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  operate_data.updataById(req.body, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.status(<span class="number">500</span>).send(<span class="string">'Server error.'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    res.redirect(<span class="string">'/'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// console.log(req.body);</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理删除请求</span></span><br><span class="line">router.get(<span class="string">'/delete'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> id = req.query.id</span><br><span class="line">  operate_data.delect(id, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.status(<span class="number">500</span>).send(<span class="string">'Server error.'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    res.redirect(<span class="string">'/'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 导出路由</span></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure>
+
+<h3 id="operate-data-js-难点"><a href="#operate-data-js-难点" class="headerlink" title="operate-data.js (难点)"></a>operate-data.js (难点)</h3><blockquote>
+<p>封装了数据增删改查操作，对异步请求数据的获取方式：回调函数</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dbpath = <span class="string">'./db.json'</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取数据</span></span><br><span class="line"><span class="comment"> * 通过回调函数的方式获取异步读取文件的数据</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line">exports.find = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">  fs.readFile(dbpath, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> callback(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// null 是为了区分 err</span></span><br><span class="line">    callback(<span class="literal">null</span>, <span class="built_in">JSON</span>.parse(data).students)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *通过 ID 获取数据 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">exports.findById = <span class="function"><span class="keyword">function</span> (<span class="params">id, callback</span>) </span>&#123;</span><br><span class="line">  fs.readFile(dbpath, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> callback(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> students = <span class="built_in">JSON</span>.parse(data).students</span><br><span class="line">    <span class="keyword">let</span> ret = students.find(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> item.id === <span class="built_in">parseInt</span>(id)</span><br><span class="line">    &#125;)</span><br><span class="line">    callback(<span class="literal">null</span>, ret)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 保存数据</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line">exports.save = <span class="function"><span class="keyword">function</span> (<span class="params">student, callback</span>) </span>&#123;</span><br><span class="line">  fs.readFile(dbpath, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> callback(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> students = <span class="built_in">JSON</span>.parse(data).students</span><br><span class="line">    student.id = students[students.length - <span class="number">1</span>].id + <span class="number">1</span></span><br><span class="line">    students.push(student)</span><br><span class="line">    <span class="comment">// 将字符串转为对象</span></span><br><span class="line">    <span class="keyword">let</span> fileData = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      students: students</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 将对象数据写入文件</span></span><br><span class="line">    fs.writeFile(dbpath, fileData, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> callback(err)</span><br><span class="line">      &#125;</span><br><span class="line">      callback(<span class="literal">null</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 更新数据</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line">exports.updataById = <span class="function"><span class="keyword">function</span> (<span class="params">student, callback</span>) </span>&#123;</span><br><span class="line">  fs.readFile(dbpath, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> callback(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> students = <span class="built_in">JSON</span>.parse(data).students</span><br><span class="line">    student.id = <span class="built_in">parseInt</span>(student.id)</span><br><span class="line">    <span class="comment">// es6的数组方法，如果item.id === student.id 条件的时候，find 会终止遍历，同时返回 item </span></span><br><span class="line">    <span class="keyword">let</span> stu = students.find(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> item.id === student.id</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> student) &#123;</span><br><span class="line">      stu[key] = student[key]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> fileData = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      students: students</span><br><span class="line">    &#125;)</span><br><span class="line">    fs.writeFile(dbpath, fileData, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> callback(err)</span><br><span class="line">      &#125;</span><br><span class="line">      callback(<span class="literal">null</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line">exports.delect = <span class="function"><span class="keyword">function</span> (<span class="params">id, callback</span>) </span>&#123;</span><br><span class="line">  fs.readFile(dbpath, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> callback(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> students = <span class="built_in">JSON</span>.parse(data).students</span><br><span class="line">		<span class="comment">// es6的数组方法，如果item.id === id 条件的时候，会终止遍历，同时返回 item 的下标</span></span><br><span class="line">    <span class="keyword">let</span> delected = students.findIndex(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> item.id === <span class="built_in">parseInt</span>(id)</span><br><span class="line">    &#125;)</span><br><span class="line">    students.splice(delected, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">let</span> fileData = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      students: students</span><br><span class="line">    &#125;)</span><br><span class="line">    fs.writeFile(dbpath, fileData, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> callback(err)</span><br><span class="line">      &#125;</span><br><span class="line">      callback(<span class="literal">null</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>此情可待成追忆，只怪当时没赏钱</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="余健 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="余健 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>余健
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/02/28/Node.js/" title="Node.js">http://yoursite.com/2020/02/28/Node.js/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <div>   
+             
+          <div>     
+             
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        -------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读-------------
+    </div>     
+     
+</div>   
+         
+      </div>
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/28/markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" rel="prev" title="markdown常用语法">
+      <i class="fa fa-chevron-left"></i> markdown常用语法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80ODgyMi8yNTMxNg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-js介绍"><span class="nav-number">1.</span> <span class="nav-text">Node.js介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#node-js是什么"><span class="nav-number">1.1.</span> <span class="nav-text">node.js是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-能做什么"><span class="nav-number">1.2.</span> <span class="nav-text">Node.js 能做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些资源"><span class="nav-number">1.3.</span> <span class="nav-text">一些资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#能学习到什么"><span class="nav-number">1.4.</span> <span class="nav-text">能学习到什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#node-js模块化开发"><span class="nav-number">2.</span> <span class="nav-text">node.js模块化开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#开发规范"><span class="nav-number">2.1.</span> <span class="nav-text">开发规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块导出"><span class="nav-number">2.2.</span> <span class="nav-text">模块导出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块加载"><span class="nav-number">2.3.</span> <span class="nav-text">模块加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块有路径但没有后缀时"><span class="nav-number">2.3.1.</span> <span class="nav-text">模块有路径但没有后缀时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块没有路径且没有后缀时"><span class="nav-number">2.3.2.</span> <span class="nav-text">模块没有路径且没有后缀时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先从缓存加载"><span class="nav-number">2.3.3.</span> <span class="nav-text">优先从缓存加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统模块"><span class="nav-number">2.4.</span> <span class="nav-text">系统模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作"><span class="nav-number">2.4.1.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路径操作"><span class="nav-number">2.4.2.</span> <span class="nav-text">路径操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-中的其他成员"><span class="nav-number">2.5.</span> <span class="nav-text">Node 中的其他成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三方模块"><span class="nav-number">2.6.</span> <span class="nav-text">第三方模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm"><span class="nav-number">2.6.1.</span> <span class="nav-text">npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#替换-npm-下载地址"><span class="nav-number">2.6.2.</span> <span class="nav-text">替换 npm 下载地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nodemon"><span class="nav-number">2.6.3.</span> <span class="nav-text">nodemon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gulp"><span class="nav-number">2.6.4.</span> <span class="nav-text">Gulp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#package-json文件"><span class="nav-number">2.6.5.</span> <span class="nav-text">package.json文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#package-lock-json文件"><span class="nav-number">2.6.6.</span> <span class="nav-text">package-lock.json文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建web服务器"><span class="nav-number">3.</span> <span class="nav-text">创建web服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IP地址和端口号"><span class="nav-number">3.1.</span> <span class="nav-text">IP地址和端口号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立服务器"><span class="nav-number">3.2.</span> <span class="nav-text">建立服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#url"><span class="nav-number">3.3.</span> <span class="nav-text">url</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向"><span class="nav-number">3.4.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例：留言板"><span class="nav-number">3.5.</span> <span class="nav-text">案例：留言板</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Express框架"><span class="nav-number">4.</span> <span class="nav-text">Express框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">4.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">4.2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hello-world"><span class="nav-number">4.2.1.</span> <span class="nav-text">hello world</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收表单数据"><span class="nav-number">4.2.2.</span> <span class="nav-text">接收表单数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由处理"><span class="nav-number">4.2.3.</span> <span class="nav-text">路由处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session"><span class="nav-number">4.2.4.</span> <span class="nav-text">session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中间件"><span class="nav-number">4.2.5.</span> <span class="nav-text">中间件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例：留言板-1"><span class="nav-number">4.3.</span> <span class="nav-text">案例：留言板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例：crud"><span class="nav-number">4.4.</span> <span class="nav-text">案例：crud</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#效果图"><span class="nav-number">4.4.1.</span> <span class="nav-text">效果图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文档结构图"><span class="nav-number">4.4.2.</span> <span class="nav-text">文档结构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目依赖"><span class="nav-number">4.4.3.</span> <span class="nav-text">项目依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由设计"><span class="nav-number">4.4.4.</span> <span class="nav-text">路由设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#views"><span class="nav-number">4.4.5.</span> <span class="nav-text">views</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#head信息"><span class="nav-number">4.4.5.1.</span> <span class="nav-text">head信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#index-html"><span class="nav-number">4.4.5.2.</span> <span class="nav-text">index.html</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#add-html"><span class="nav-number">4.4.5.3.</span> <span class="nav-text">add.html</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#edit-html"><span class="nav-number">4.4.5.4.</span> <span class="nav-text">edit.html</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#db-json"><span class="nav-number">4.4.6.</span> <span class="nav-text">db.json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app-js"><span class="nav-number">4.4.7.</span> <span class="nav-text">app.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#router-js"><span class="nav-number">4.4.8.</span> <span class="nav-text">router.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#operate-data-js-难点"><span class="nav-number">4.4.9.</span> <span class="nav-text">operate-data.js (难点)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余健"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">余健</p>
+  <div class="site-description" itemprop="description">沧海月明珠有泪，蓝田日暖玉生烟。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2lhbXl1amlhbg==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iamyujian"><i class="fa fa-fw fa-github"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/736755736@qq.com" title="E-Mail → 736755736@qq.com"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+        
+        <!--网易云音乐-->
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=4884626741&auto=0&height=430"></iframe>
+      
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">余健</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">219k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:19</span>
+</div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.getAttribute('data-flag-title');
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=S9gKDsigcds2Rd3cHdxSND4V-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id'     : 'S9gKDsigcds2Rd3cHdxSND4V-gzGzoHsz',
+            'X-LC-Key'    : 'it13CcBqsL8A0xw877PIj1mO',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,255' opacity='0.2' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9},"log":false});</script></body>
+</html>
