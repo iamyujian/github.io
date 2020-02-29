@@ -151,9 +151,9 @@
       <category term="Node" scheme="http://yoursite.com/categories/Node/"/>
     
     
-      <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
       <category term="Node" scheme="http://yoursite.com/tags/Node/"/>
+    
+      <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
