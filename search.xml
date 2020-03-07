@@ -3,13 +3,15 @@
   <entry>
     <title>Vue组件化开发</title>
     <url>/2020/03/08/Vue%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
+    <content><![CDATA[<center> 
+<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
 
-<center> 
-  Vue 组件化开发学习文档
+
+<p>Vue 的组件化开发</p>
 </center>
-
 <a id="more"></a>
+
+
 
 <h1 id="组件化开发"><a href="#组件化开发" class="headerlink" title="组件化开发"></a>组件化开发</h1><h2 id="认识组件化"><a href="#认识组件化" class="headerlink" title="认识组件化"></a>认识组件化</h2><ul>
 <li>人面对复杂问题的处理方式：任何一个人处理信息的逻辑能力都是有限的，但人有一种天生的能力，就是将问题进行拆解，如果将一个复杂的问题，拆分成很多个可以处理的小问题，再将其放在整体当中，会发现大的问题也会迎刃而解</li>
@@ -224,6 +226,12 @@
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">base-layout</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:</span>[<span class="attr">dynamicSlotName</span>]&gt;</span></span><br><span class="line">   ...</span><br><span class="line"> <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">base-layout</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
   </entry>
   <entry>
     <title>模块化开发</title>
@@ -830,12 +838,12 @@
   <entry>
     <title>Vue基础语法</title>
     <url>/2020/03/06/Vue%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</url>
-    <content><![CDATA[<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
+    <content><![CDATA[<center> 
+<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
 
-<center> 
-  Vue 的简介和一些基本语法
+
+<p>Vue 的简介和一些基本语法</p>
 </center>
-
 <a id="more"></a>
 
 <h1 id="Vue-简介"><a href="#Vue-简介" class="headerlink" title="Vue 简介"></a>Vue 简介</h1><h2 id="Vue-简单认识"><a href="#Vue-简单认识" class="headerlink" title="Vue 简单认识"></a>Vue 简单认识</h2><ul>
