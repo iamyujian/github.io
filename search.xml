@@ -3,7 +3,7 @@
   <entry>
     <title>Vue组件化开发</title>
     <url>/2020/03/08/Vue%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg"  />
+    <content><![CDATA[<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
 
 <center> 
   Vue 组件化开发学习文档
@@ -830,7 +830,7 @@
   <entry>
     <title>Vue基础语法</title>
     <url>/2020/03/06/Vue%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</url>
-    <content><![CDATA[<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg"  />
+    <content><![CDATA[<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
 
 <center> 
   Vue 的简介和一些基本语法
@@ -4190,8 +4190,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>JS</tag>
         <tag>前端</tag>
+        <tag>JS</tag>
       </tags>
   </entry>
   <entry>
@@ -4731,8 +4731,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>JS</tag>
         <tag>前端</tag>
+        <tag>JS</tag>
       </tags>
   </entry>
   <entry>
@@ -5609,8 +5609,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>JS</tag>
         <tag>前端</tag>
+        <tag>JS</tag>
       </tags>
   </entry>
   <entry>
@@ -5889,8 +5889,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>JS</tag>
         <tag>前端</tag>
+        <tag>JS</tag>
       </tags>
   </entry>
   <entry>
@@ -6591,8 +6591,8 @@ switch 语句在比较值时使用的是全等操作符, 因此不会发生类�
         <category>前端</category>
       </categories>
       <tags>
-        <tag>JS</tag>
         <tag>前端</tag>
+        <tag>JS</tag>
       </tags>
   </entry>
   <entry>
