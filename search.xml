@@ -1,6 +1,889 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>网络模块封装</title>
+    <url>/2020/03/13/%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9D%97%E5%B0%81%E8%A3%85/</url>
+    <content><![CDATA[<center>
+<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
+
+
+<p>axios 框架的网络模块封装</p>
+</center>
+<a id="more"></a>
+
+
+
+<h1 id="网络模块封装"><a href="#网络模块封装" class="headerlink" title="网络模块封装"></a>网络模块封装</h1><h2 id="网络模块的选择"><a href="#网络模块的选择" class="headerlink" title="网络模块的选择"></a>网络模块的选择</h2><h3 id="传统的-Ajax"><a href="#传统的-Ajax" class="headerlink" title="传统的 Ajax"></a>传统的 Ajax</h3><ul>
+<li>传统的 Ajax 基于 XMLHttpRequest(XHR)</li>
+<li>之所以不用它，是因为它配置和调用方式等非常混乱，编码起来看起来令人十分头疼</li>
+<li>真实开发中很少直接使用传统的 Ajax ， 而是使用 jQuery-Ajax</li>
+</ul>
+<h3 id="jQuery-Ajax"><a href="#jQuery-Ajax" class="headerlink" title="jQuery-Ajax"></a>jQuery-Ajax</h3><ul>
+<li>jQuery-Ajax 相对于传统的 Ajax 非常好用</li>
+<li>之所以不用它，是因为 jQuery 是一个重量级的框架，代码有 1w+ 行，而 Vue 的代码才 1w+ 行，所以没必要为了网络请求，特意引用一个 jQuery</li>
+</ul>
+<h3 id="Vue-resource"><a href="#Vue-resource" class="headerlink" title="Vue-resource"></a>Vue-resource</h3><ul>
+<li>官方在 Vue1.x 的时候, 推出了 Vue-resource</li>
+<li>Vue-resource 的体积相对于 jQuery 小很多</li>
+<li>之所以不用它，是因为在 Vue2.0 推出后，Vue 的作者就在 GitHub 的 Issues 中说明了去掉 vue-resource，并且以后也不会再更新，意味着以后 vue-reource 不再支持新的 Vue 版本，也不会再继续更新和维护，对以后的项目开发和维护都存在很大的隐患</li>
+</ul>
+<h3 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h3><ul>
+<li>在说明不再继续更新和维护 vue-resource 的同时，作者还推荐了一个框架：axios</li>
+<li>axios有非常多的优点, 并且用起来也非常方便</li>
+</ul>
+<h2 id="axios-1"><a href="#axios-1" class="headerlink" title="axios"></a>axios</h2><h3 id="axios-功能特点"><a href="#axios-功能特点" class="headerlink" title="axios 功能特点"></a>axios 功能特点</h3><ul>
+<li>在浏览器中发送 XMLHttpRequests 请求</li>
+<li>在 node.js 中发送 http请求</li>
+<li>支持 Promise API</li>
+<li>拦截请求和响应</li>
+<li>转换请求和响应数据</li>
+</ul>
+<h3 id="axios-请求方式"><a href="#axios-请求方式" class="headerlink" title="axios 请求方式"></a>axios 请求方式</h3><ul>
+<li><code>axios(config)</code></li>
+<li><code>axios.request(config)</code></li>
+<li><code>axios.get(url[, config])</code></li>
+<li><code>axios.delete(url[, config])</code></li>
+<li><code>axios.head(url[, config])</code></li>
+<li><code>axios.post(url[, data[, config]])</code></li>
+<li><code>axios.put(url[, data[, config]])</code></li>
+<li><code>axios.patch(url[, data[, config]])</code></li>
+</ul>
+<p><strong>发送 get 请求</strong></p>
+<img src="https://i.loli.net/2020/03/13/EF9rmsqyzkvXp6Z.png" alt="img" style="zoom:67%;" />
+
+<p><strong>发送并发请求</strong></p>
+<p>使用 <code>axios.all</code>，可以放入多个请求的数组</p>
+<p><code>axios.all([])</code> 返回的结果是一个数组，使用 <code>axios.spread</code> 可将数组 [res1,res2] 展开为 res1, res2</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">axios.all([axios.get(<span class="string">'http://123.207.32.32:8000/home/multidata'</span>),</span><br><span class="line">        axios.get(<span class="string">'http://123.207.32.32:8000/home/data'</span>, &#123; <span class="attr">params</span>: &#123; <span class="attr">type</span>: <span class="string">'sell'</span>, <span class="attr">page</span>: <span class="number">1</span> &#125; &#125;)</span><br><span class="line">    ])</span><br><span class="line">    .then(axios.spread(<span class="function">(<span class="params">res1, res2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res1);</span><br><span class="line">        <span class="built_in">console</span>.log(res2);</span><br><span class="line">    &#125;))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h3><p>在开发中，可能很多参数都是固定的，这个时候，我们可以进行一些抽取，也可以利用 axios 的全局配置</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">axios.defaults.baseURL = <span class="string">'123.207.32.32:8000'</span></span><br><span class="line">axios.defaults.headers.post[<span class="string">'Content-Type'</span>] = <span class="string">'application/x-www-form-urlencoded'</span>;</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2020/03/13/tApmYw9GJHhLlj6.png" alt="img" style="zoom:67%;" />
+
+<h3 id="常见的配置选项"><a href="#常见的配置选项" class="headerlink" title="常见的配置选项"></a>常见的配置选项</h3><ul>
+<li>请求地址：<code>url: &#39;/user&#39;</code></li>
+<li>请求类型：<code>method: &#39;get&#39;</code></li>
+<li>请求路径：<code>baseURL: &#39;http://&#39;</code></li>
+<li>请求的数据处理：<code>transformRequest: [function(data){}]</code></li>
+<li>请求的数据处理：<code>transformResponse: [function(data){}]</code></li>
+<li>自定义的请求头：<code>headers: {&#39;x-Requested-With&#39; : &#39;XMLHttpReqyest&#39;}</code></li>
+<li>URL查询对象：<code>params: {id: 12}</code></li>
+<li>查询对象序列化函数：<code>paramsSerializer: function(params) {}</code></li>
+<li>request body ： <code>data: {key: &#39;aa&#39;}</code></li>
+<li>超时设置s：<code>timeout: 1000</code></li>
+<li>跨域是否带 token：<code>withCredentials: false</code></li>
+<li>自定义请求处理：<code>adapter: function(resolve, reject, config) {}</code></li>
+<li>身份验证信息：<code>auth: {uname: &#39;&#39;, pwd: &#39;12&#39;}</code></li>
+<li>响应的数据格式 json / blob /document/ arraybuffer /text /stream：<code>responseType: &#39;json&#39;</code></li>
+</ul>
+<h3 id="axios-实例"><a href="#axios-实例" class="headerlink" title="axios 实例"></a>axios 实例</h3><p>为什么要创建 axios 的实例呢?</p>
+<p>当我们从 axios 模块中导入对象时，使用的实例是默认的实例，当给该实例设置一些默认配置时，这些配置就被固定下来了，但是后续开发中，某些配置可能会不太一样，比如某些请求需要使用特定的 baseURL 或者 timeout 或者content-Type 等，这时我们就可以创建新的实例，并且传入属于该实例的配置信息，这里推荐使用实例的方式，而不使用全局的方式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建新的实例</span></span><br><span class="line"><span class="keyword">const</span> axiosInstance = axios.create(&#123;</span><br><span class="line">    baseURL: <span class="string">'http://123.207.32.32:8000'</span>,</span><br><span class="line">    timeout: <span class="number">5000</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">        <span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 发送网络请求</span></span><br><span class="line">axiosInstance(&#123;</span><br><span class="line">    url: <span class="string">'/category'</span>,</span><br><span class="line">    method: <span class="string">'get'</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="axios-封装"><a href="#axios-封装" class="headerlink" title="axios 封装"></a>axios 封装</h3><p>为什么要封装呢？万一哪天这个框架不维护了呢？，那维护项目就只能加班加点了，所以封装后的代码更易维护，封装有多种方式，这里只展示最简洁、最容易理解的一种</p>
+<ul>
+<li>封装 axios</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/NUQGr1MqoucR8LK.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>请求 axios</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/DThA8ve7Esqjpa6.png" alt="img" style="zoom:67%;" />
+
+<h4 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h4><p>axios 提供了拦截器，用于我们在发送每次请求或者得到相应后，进行对应的处理</p>
+<p>如何使用拦截器呢？</p>
+<img src="https://i.loli.net/2020/03/13/pAzQF52UwORDm97.png" alt="img" style="zoom:67%;" />
+
+<p>拦截器中都做什么呢？请求拦截可以做到的事情：</p>
+<img src="https://i.loli.net/2020/03/13/Ld84gSZzawnqUmB.png" alt="img" style="zoom:67%;" />
+
+<p>请求拦截中错误拦截较少，通常都是配置相关的拦截</p>
+<p>比如请求超时，可以将页面跳转到一个错误页面中</p>
+<p>响应拦截中完成的事情：</p>
+<p>响应的成功拦截中，主要是对数据进行过滤</p>
+<img src="https://i.loli.net/2020/03/13/zpoWuSgiTAMmhyv.png" alt="img" style="zoom:67%;" />
+
+<p>响应的失败拦截中，可以根据 status 判断报错的错误码，跳转到不同的错误提示页面：</p>
+<img src="https://i.loli.net/2020/03/13/bahCoRIgnxupZ9d.png" alt="img" style="zoom:67%;" />]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vuex</title>
+    <url>/2020/03/13/Vuex/</url>
+    <content><![CDATA[<center>
+<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
+
+
+<p>Vuex 的使用</p>
+</center>
+<a id="more"></a>
+
+
+
+<h1 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h1><h2 id="认识-Vuex"><a href="#认识-Vuex" class="headerlink" title="认识 Vuex"></a>认识 Vuex</h2><h3 id="什么是-Vuex"><a href="#什么是-Vuex" class="headerlink" title="什么是 Vuex"></a>什么是 Vuex</h3><blockquote>
+<p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式</p>
+</blockquote>
+<ul>
+<li>Vuex 采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化</li>
+<li>Vuex 也集成到 Vue 的官方调试工具 devtools extension，提供了诸如零配置的 time-travel 调试、状态快照导入导出等高级调试功能</li>
+</ul>
+<h3 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h3><h4 id="什么是状态管理"><a href="#什么是状态管理" class="headerlink" title="什么是状态管理"></a>什么是状态管理</h4><p>简单理解：把需要多个组件共享的变量全部存储在一个对象里面，然后将这个对象放在顶层的 Vue 实例中，让其他组件可以使用，共享这个对象中的所有变量属性，并且是响应式的</p>
+<h4 id="管理什么状态"><a href="#管理什么状态" class="headerlink" title="管理什么状态"></a>管理什么状态</h4><ul>
+<li>用户的登录状态、用户名称、头像、地理位置信息等</li>
+<li>商品的收藏、购物车中的物品等</li>
+</ul>
+<h4 id="单界面的状态管理"><a href="#单界面的状态管理" class="headerlink" title="单界面的状态管理"></a>单界面的状态管理</h4><p>在单个组件中进行状态管理是一件非常简单的事情，如图：</p>
+<img src="https://i.loli.net/2020/03/13/LEUzYHMRiur4vPx.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>State：状态（姑且可以当做是 data 中的属性）</li>
+<li>View：视图层，可以针对 State 的变化，显示不同的信息</li>
+<li>Actions：用户的各种操作：点击、输入等，会导致状态的改变</li>
+</ul>
+<p><strong>单界面状态管理的实现</strong></p>
+<img src="https://i.loli.net/2020/03/13/yW8UY3DTiEKesox.png" alt="img" style="zoom:67%;" />
+
+<p>在这个案例中：</p>
+<ul>
+<li>counter 需要某种方式被记录下来，也就是 State</li>
+<li>counter 目前的值需要被显示在界面中，也就是我们的 View</li>
+<li>界面发生某些操作时（这里是用户的点击，也可以是用户的 input），需要去更新状态，也就是 Actions</li>
+</ul>
+<h4 id="多界面状态管理"><a href="#多界面状态管理" class="headerlink" title="多界面状态管理"></a>多界面状态管理</h4><p>Vue 已经帮我们做好了单个界面的状态管理，但是如果是多个界面呢？</p>
+<p>多个视图都依赖同一个状态（一个状态改了，多个界面需要进行更新）</p>
+<p>全局单例模式（大管家）</p>
+<p>现在要做的就是将共享的状态抽取出来，交给大管家统一进行管理，之后每个试图按照规定进行访问和修改等操作，这就是 Vuex 的基本思想</p>
+<p>Vuex 状态管理图例</p>
+<img src="https://i.loli.net/2020/03/13/XQupl8njUPO2DMz.png" alt="img" style="zoom:67%;" />
+
+<h3 id="Vuex-的基本使用"><a href="#Vuex-的基本使用" class="headerlink" title="Vuex 的基本使用"></a>Vuex 的基本使用</h3><p><strong>简单的案例</strong></p>
+<p>还是实现一下之前简单的案例：</p>
+<p><img src="https://i.loli.net/2020/03/13/1H984S5KBcMQ6pw.png" alt="img"></p>
+<p>首先，我们需要在某个地方存放我们的 Vuex 代码：</p>
+<ul>
+<li>安装 Vuex：<code>npm i vuex --save</code></li>
+<li>创建一个文件夹 store，并且在其中创建一个 index.js 文件</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/y4T8OVvdRukJZWQ.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>在 index.js 文件中写入如下代码</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line">vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mutations: &#123;</span><br><span class="line">        increment(state) &#123;</span><br><span class="line">            state.count++</span><br><span class="line">        &#125;,</span><br><span class="line">        decrement(state) &#123;</span><br><span class="line">            state.count--</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+
+<p><strong>挂载到 Vue 实例中</strong></p>
+<p>其次，我们让所有的 Vue 组件都可以使用这个 store 对象</p>
+<p>来到 main.js 文件，导入 store 对象，并且放在 <code>new Vue</code> 中：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span></span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">'#app'</span>,</span><br><span class="line">    router,</span><br><span class="line">    store,</span><br><span class="line">    render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>此后，在其他 Vue 组件中，可以通过 <code>this.$store</code> 的方式，获取到 store 对象</p>
+<p><strong>使用 Vuex 的 count</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;test&quot;&gt;</span><br><span class="line">    &lt;h2&gt;当前计数：&#123;&#123;count&#125;&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">    &lt;button @click&#x3D;&quot;increment&quot;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;button @click&#x3D;&quot;decrement&quot;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;Test&#39;,</span><br><span class="line">  computed:&#123;</span><br><span class="line">    count()&#123;</span><br><span class="line">      return this.$store.state.count</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    increment()&#123;</span><br><span class="line">      this.$store.commit(&#39;increment&#39;)</span><br><span class="line">    &#125;,</span><br><span class="line">    decrement()&#123;</span><br><span class="line">      this.$store.commit(&#39;decrement&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这就是使用 Vuex 最简单的方式了：</p>
+<ol>
+<li>提取出一个公共的 store 对象，用于保存在多个组件中共享的状态</li>
+<li>将 store 对象放置在 new Vue 对象中，这样可以保证在所有的组件中都可以使用到</li>
+<li>在其他组件中使用 store 对象中保存的状态即可<ol>
+<li>通过 <code>this.$store.state.属性</code> 的方式来访问状态</li>
+<li>通过 <code>this.$store.commit(‘Mutations中方法’)</code> 来修改状态</li>
+</ol>
+</li>
+</ol>
+<p>注意事项：</p>
+<p>我们通过提交 Mutations 的方式，而非直接改变 <code>store.state.count</code> ，这是因为 Vuex 可以更明确的追踪状态的变化，如果是由多个组件修改同一个状态，可以知道是由哪个组件修改的什么状态，便于调试，所以不要直接改变 <code>store.state.count</code> 的值。</p>
+<h2 id="Vuex-核心概念"><a href="#Vuex-核心概念" class="headerlink" title="Vuex 核心概念"></a>Vuex 核心概念</h2><h3 id="State-单一状态树"><a href="#State-单一状态树" class="headerlink" title="State 单一状态树"></a>State 单一状态树</h3><p>Vuex 提出使用单一状态树（Single Source of Truth），也可以翻译成单一数据源</p>
+<p>如果状态信息是保存到多个 Store 对象中的，那么之后的管理和维护等等都会变得特别困难，所以 Vuex 使用了单一状态树来管理应用层级的全部状态</p>
+<p>单一状态树能够让我们以最直接的方式找到某个状态的片段，而且在之后的维护和调试过程中，也可以非常方便的管理和维护</p>
+<h3 id="Getters"><a href="#Getters" class="headerlink" title="Getters"></a>Getters</h3><p>有时候，我们需要从 store 中获取一些 state 变异后的状态，则可以使用 getters，相当于计算属性，一些复杂的计算和操作可以写到这里</p>
+<h4 id="Getters-基本使用"><a href="#Getters-基本使用" class="headerlink" title="Getters 基本使用"></a>Getters 基本使用</h4><p>比如，现在 Store 中有这样的学生信息：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        count: <span class="number">0</span>,</span><br><span class="line">        students: [</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="number">1001</span>, <span class="attr">name</span>: <span class="string">'lyy'</span>, <span class="attr">age</span>: <span class="number">18</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="number">1002</span>, <span class="attr">name</span>: <span class="string">'sss'</span>, <span class="attr">age</span>: <span class="number">17</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">id</span>: <span class="number">1003</span>, <span class="attr">name</span>: <span class="string">'lin'</span>, <span class="attr">age</span>: <span class="number">28</span> &#125;,</span><br><span class="line">          	&#123; <span class="attr">id</span>: <span class="number">1004</span>, <span class="attr">name</span>: <span class="string">'jack'</span>, <span class="attr">age</span>: <span class="number">24</span> &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>现要求获取年龄小于20的学生个数，可以在 Store 中定义 getters：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">getters: &#123;</span><br><span class="line">  <span class="comment">// 获取年龄小于20的学生人数</span></span><br><span class="line">  getAgeLess20Count(state) &#123; </span><br><span class="line">    <span class="keyword">return</span> state.students.filter(<span class="function"><span class="params">s</span> =&gt;</span> s.age &lt; <span class="number">20</span>).length</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后，在各个组件中想要使用这个 getters，只需要：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">    &lt;h3&gt;&#123;&#123;this.$store.getters.getAgeLess20Count&#125;&#125;&lt;&#x2F;h3&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Getters-作为参数"><a href="#Getters-作为参数" class="headerlink" title="Getters 作为参数"></a>Getters 作为参数</h4><p>如果我们已经有了一个获取所有年龄小于20岁学生列表的 getters，那么可以这样来写：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">getters: &#123;</span><br><span class="line">  <span class="comment">// 获取年龄小于20的学生</span></span><br><span class="line">  getAgeLess20(state) &#123;</span><br><span class="line">    <span class="keyword">return</span> state.students.filter(<span class="function"><span class="params">s</span> =&gt;</span> s.age &lt; <span class="number">20</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 获取年龄小于20的学生人数</span></span><br><span class="line">  getAgeLess20Count(state, getters) &#123;</span><br><span class="line">    <span class="keyword">return</span> getters.getAgeLess20.length</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Getters-传递参数"><a href="#Getters-传递参数" class="headerlink" title="Getters 传递参数"></a>Getters 传递参数</h4><p>getters 默认是不能传递参数的，如果希望传递参数，那么只能让 getters 本身返回另一个函数</p>
+<p>比如上面的案例中，我们希望根据 ID 获取用户的信息：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">getters: &#123;</span><br><span class="line">  <span class="comment">// 根据id查找学生</span></span><br><span class="line">  getStuByID(state) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">id</span> =&gt;</span> state.students.find(<span class="function"><span class="params">s</span> =&gt;</span> s.id === id)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在组件中使用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">    &lt;h3&gt;&#123;&#123;this.$store.getters.getStuByID(1002)&#125;&#125;&lt;&#x2F;h3&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/03/13/CumG8c9O3Nd6rwF.png" alt="img"></p>
+<h3 id="Mutations-状态更新"><a href="#Mutations-状态更新" class="headerlink" title="Mutations 状态更新"></a>Mutations 状态更新</h3><p>Vuex 的 store 状态的更新唯一方式：提交 Mutations</p>
+<h4 id="Mutations-组成"><a href="#Mutations-组成" class="headerlink" title="Mutations 组成"></a>Mutations 组成</h4><ul>
+<li>字符串的事件类型（type）</li>
+<li>一个回调函数（handler），该回调函数的第一个参数就是 state</li>
+</ul>
+<h4 id="Mutations-的定义方式"><a href="#Mutations-的定义方式" class="headerlink" title="Mutations 的定义方式"></a>Mutations 的定义方式</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">mutations: &#123;</span><br><span class="line">  increment(state) &#123;</span><br><span class="line">    state.count++</span><br><span class="line">  &#125;,</span><br><span class="line">    decrement(state) &#123;</span><br><span class="line">      state.count--</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>通过 Mutations 更新</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">methods:&#123;</span><br><span class="line">  increment()&#123;</span><br><span class="line">    <span class="keyword">this</span>.$store.commit(<span class="string">'increment'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  decrement()&#123;</span><br><span class="line">    <span class="keyword">this</span>.$store.commit(<span class="string">'decrement'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Mutations-传递参数"><a href="#Mutations-传递参数" class="headerlink" title="Mutations 传递参数"></a>Mutations 传递参数</h4><p>在通过 Mutations 更新数据的时候，有时候希望携带一些额外的参数，这种参数被称为 Mutations 的载荷(Payload)</p>
+<p>比如之前的计数器案例，每次都是加减 1 ，现在想让加减的数字作为一个参数，传到 Mutations 的方法中：</p>
+<p><img src="https://i.loli.net/2020/03/13/g6C89dPvYxSzKj1.png" alt="img"></p>
+<img src="https://i.loli.net/2020/03/13/dl4mUAnkI17KZfR.png" alt="img" style="zoom:67%;" />
+
+<p>如果有很多参数需要传递，通常会以对象的形式传递，也就是 payload 是一个对象，再从对象中取出相关的信息</p>
+<p><img src="https://i.loli.net/2020/03/13/Rwz8dtxIBO13GpL.png" alt="img"></p>
+<h4 id="Mutations-提交风格"><a href="#Mutations-提交风格" class="headerlink" title="Mutations 提交风格"></a>Mutations 提交风格</h4><p>上面的通过 commit 进行提交是一种普通的方式</p>
+<p>Vue 还提供了另外一种风格, 它是一个包含 type 属性的对象</p>
+<p><img src="https://i.loli.net/2020/03/13/c9YCO2zZ5UNo7di.png" alt="img"></p>
+<p>Mutations 中的处理方式是将整个 commit 的对象作为 payload 使用, 所以代码没有改变, 依然如下:</p>
+<p><img src="https://i.loli.net/2020/03/13/NkDG3pLngYU7zmM.png" alt="img"></p>
+<h4 id="Mutations-响应规则"><a href="#Mutations-响应规则" class="headerlink" title="Mutations 响应规则"></a>Mutations 响应规则</h4><p>Vuex 的 store 中的 state 是响应式的， 当 state 中的数据发生改变时，Vue 组件会自动更新</p>
+<p>这就要求我们必须遵守一些Vuex对应的规则：</p>
+<ul>
+<li>提前在store中初始化好所需的属性</li>
+<li>当给 state 中的对象添加新属性时，使用下面的方式：<ol>
+<li>使用 <code>Vue.set(obj, &#39;newProp&#39;, 123)</code></li>
+<li>用新对象给旧对象重新赋值</li>
+</ol>
+</li>
+</ul>
+<p>我们来看一个例子:</p>
+<p>当我们点击更新信息时，界面并没有发生对应改变：</p>
+<img src="https://i.loli.net/2020/03/13/CLlSVqzUB6Ncvis.png" alt="img" style="zoom:67%;" />
+
+<p>以上代码给 state 中的对象添加新属性时，由于不是响应式添加，所以界面不会更新，要想让界面更新，可以使用一下方式：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">updateInfo(state, payload) &#123;</span><br><span class="line">  <span class="comment">// state.info['height'] = payload.height</span></span><br><span class="line">  <span class="comment">// 方式一：Vue.set()</span></span><br><span class="line">  <span class="comment">// Vue.set(state.info, 'height', payload.height)</span></span><br><span class="line">  <span class="comment">// 方式二：给 info 赋值一个新的对象</span></span><br><span class="line">  state.info = &#123;...state.info, <span class="string">'height'</span>: payload.height &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时，点击修改信息按钮后，界面和 info 里面的信息都会更新：</p>
+<img src="https://i.loli.net/2020/03/13/184I9sQDoM2LPyn.png" alt="img" style="zoom:67%;" />
+
+<h4 id="Mutations-常量类型"><a href="#Mutations-常量类型" class="headerlink" title="Mutations 常量类型"></a>Mutations 常量类型</h4><p>在 Mutations 中， 我们定义了很多事件类型（也就是其中的方法名称），当我们的项目不断增大时，会出现：</p>
+<ul>
+<li>Vuex 管理的状态越来越多，需要更新状态的情况越来越多</li>
+<li>Mutations 中的方法越来越多，使用者需要花费大量的经历去记住这些方法，甚至是多个文件间来回切换，查看方法名称，甚至出现写错的情况</li>
+</ul>
+<p>如何避免上述的问题呢?</p>
+<p>在各种 Flux 实现中，一种很常见的方案是：</p>
+<ul>
+<li>使用常量替代 Mutations 事件的类型</li>
+<li>将这些常量放在一个单独的文件中，方便管理以及让整个 app 所有的事件类型一目了然</li>
+</ul>
+<p>具体操作：</p>
+<ol>
+<li>创建一个文件: mutations-types.js，并且在其中定义我们的常量</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/4vXykBfEaJ38o7g.png" alt="img" style="zoom:67%;" />
+
+<p>定义常量时，我们可以使用 ES2015 中的风格，使用一个常量来作为函数的名称</p>
+<ol start="2">
+<li>使用定义的常量</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/i3DCo5GBan68pvF.png" alt="img" style="zoom:67%;" />
+
+<h3 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h3><p>通常情况下，Vuex 要求 Mutations 中的方法必须是同步方法，因为当我们使用 devtools 时，devtools 可以帮助我们捕捉 Mutations 的快照，但如果是异步操作, 那么 devtools 将不能很好的追踪这个操作什么时候会被完成</p>
+<p>比如之前的代码，当执行修改信息操作时，devtools 中会有如下信息：</p>
+<img src="https://i.loli.net/2020/03/13/2YphSX8vNxuCBID.png" alt="img" style="zoom:67%;" />
+
+<p>但是，如果 Vuex 中的代码使用了异步函数：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">mutations: &#123;</span><br><span class="line">  [types.UPDATE_INFO](state, payload) &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      state.info = &#123;...state.info, <span class="string">'height'</span>: payload.height &#125;</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时会发现 state 中的 info 数据一直没有被改变：</p>
+<img src="https://i.loli.net/2020/03/13/zhpNYUc5AqbnxH3.png" alt="img" style="zoom:67%;" />
+
+<p>这是因为 devtools 无法追踪到异步操作</p>
+<p>虽然强调不要再 Mutations 中进行异步操作，但某些情况,，又确实希望在 Vuex 中进行一些异步操作，比如网络请求，这时可以使用 Action</p>
+<p>Action 类似于 Mutations，是用来代替 Mutations 进行异步操作的</p>
+<p>在 Action 中，可以将异步操作放在一个 Promise 中，并且在成功或者失败后，调用对应的 resolve 或 reject：</p>
+<img src="https://i.loli.net/2020/03/13/QJgie9pMPnVArNB.png" alt="img" style="zoom:67%;" />
+
+<img src="https://i.loli.net/2020/03/13/8Jv9CRQPB3UtfWN.png" alt="img" style="zoom:67%;" />
+
+<p>这里的 context 可以当成 store 对象，也可以通过 payload 传递参数，这里的 context 可以使用对象的解构方式的写法</p>
+<h3 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h3><h4 id="Modules-基本使用"><a href="#Modules-基本使用" class="headerlink" title="Modules 基本使用"></a>Modules 基本使用</h4><p>Modules 是模块的意思，为什么在Vuex中我们要使用模块呢?</p>
+<p>Vue 使用单一状态树，意味着很多状态都会交给 Vuex 来管理，当应用变得非常复杂时，store 对象就有可能变得相当臃肿，为了解决这个问题，Vuex 允许我们将 store 分割成模块（Module）， 每个模块拥有自己的 state、mutations、actions、getters 等</p>
+<p>我们按照什么样的方式来组织模块呢?</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> ModuleA = &#123;</span><br><span class="line">  state:&#123;&#125;,</span><br><span class="line">  mutations:&#123;&#125;,</span><br><span class="line">  <span class="comment">// 这里的 context 指的是本模块内 mutations 里的内容</span></span><br><span class="line">  actions:&#123;&#125;,</span><br><span class="line">  <span class="comment">// 模块里的getters可以有第三个参数 rootState ,意思是可以拿到根模块中的数据</span></span><br><span class="line">  getters:&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ModuleB = &#123;</span><br><span class="line">  state:&#123;&#125;,</span><br><span class="line">  mutations:&#123;&#125;,</span><br><span class="line">  actions:&#123;&#125;,</span><br><span class="line">  getters:&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  modules:&#123;</span><br><span class="line">    a:ModuleA,</span><br><span class="line">    b:ModuleB</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 拿取 state 里的数据的时候要.对应的模块来拿取，其它的使用方法都一样</span></span><br><span class="line">$store.state.a <span class="comment">// ModuleA 的状态</span></span><br><span class="line">$store.state.b <span class="comment">// ModuleB 的状态</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Modules-中的-state"><a href="#Modules-中的-state" class="headerlink" title="Modules 中的 state"></a>Modules 中的 state</h4><p>要想知道如何调用 Modules 中的 state，需要先了解一下 Modules 中的 module 真实位置</p>
+<p>其实，在 store 实例的 modules  中定义的 a 和 b 会被放到 store 的 state 中：</p>
+<img src="https://i.loli.net/2020/03/13/sKY3aG1QjexPVW8.png" alt="img" style="zoom:67%;" />
+
+<p>在 devtools 中也能看到：</p>
+<img src="https://i.loli.net/2020/03/13/EnFIVujzs4dOp5G.png" alt="img" style="zoom:67%;" />
+
+<p>既然 Module 被放到了 store 的 state 中，那么在其他组件中就可以使用 <code>this.$store.state</code> 来调用了：</p>
+<img src="https://i.loli.net/2020/03/13/qnrO4cFvPpTQw67.png" alt="img" style="zoom:67%;" />
+
+
+
+<p><img src="https://i.loli.net/2020/03/13/LTV19fCshbJr7Uu.png" alt="img"></p>
+<h4 id="Modules-中的-mutations"><a href="#Modules-中的-mutations" class="headerlink" title="Modules 中的 mutations"></a>Modules 中的 mutations</h4><p>虽然 mutations 是定义在模块中的，但是在组件中提交时还是使用：<code>this.$store.commit</code></p>
+<img src="https://i.loli.net/2020/03/13/seUWtcbKdgAnl7T.png" alt="img" style="zoom:67%;" />
+
+
+
+<img src="https://i.loli.net/2020/03/13/d2QXuOomCGwRWYN.png" alt="img" style="zoom:67%;" />
+
+
+
+<h4 id="Modules-中的-getters"><a href="#Modules-中的-getters" class="headerlink" title="Modules 中的 getters"></a>Modules 中的 getters</h4><img src="https://i.loli.net/2020/03/13/RJ8lxjUZ7rusOza.png" alt="img" style="zoom:67%;" />
+
+<h4 id="Modules-中的-actions"><a href="#Modules-中的-actions" class="headerlink" title="Modules 中的 actions"></a>Modules 中的 actions</h4><img src="https://i.loli.net/2020/03/13/yrCh4xBpobeO1P9.png" alt="img" style="zoom:67%;" />
+
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>当 Vuex 帮助我们管理过多的内容时，好的项目结构可以让我们的代码更加清晰：</p>
+<p>这里建议：state 的内容可以写在 index 里，其它所有的都抽离成一个模块</p>
+<img src="https://i.loli.net/2020/03/13/u4OKgRhHza2oqAQ.png" alt="img" style="zoom:67%;" />]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue router</title>
+    <url>/2020/03/13/VueRouter/</url>
+    <content><![CDATA[<center>
+<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
+
+
+<p>Vue router （路由）的使用</p>
+</center>
+<a id="more"></a>
+
+
+
+<h1 id="Vue-router"><a href="#Vue-router" class="headerlink" title="Vue-router"></a>Vue-router</h1><h2 id="认识路由"><a href="#认识路由" class="headerlink" title="认识路由"></a>认识路由</h2><h3 id="什么是路由"><a href="#什么是路由" class="headerlink" title="什么是路由"></a>什么是路由</h3><blockquote>
+<p>路由（routing）就是通过互联的网络把信息从源地址传输到目的地址的活动   — 维基百科</p>
+</blockquote>
+<p>路由器提供了两种机制， 路由和转发</p>
+<ul>
+<li>路由是决定数据包从来源到目的地的路径</li>
+<li>转发将输入端的数据转移到合适的输出端</li>
+</ul>
+<h3 id="网站发展的几个阶段"><a href="#网站发展的几个阶段" class="headerlink" title="网站发展的几个阶段"></a>网站发展的几个阶段</h3><h4 id="后端路由阶段"><a href="#后端路由阶段" class="headerlink" title="后端路由阶段"></a>后端路由阶段</h4><p><strong>什么是后端路由</strong></p>
+<p>早期的网站开发，整个 HTML 页面都是是由服务器来渲染的，服务器直接生产渲染好对应的 HTML 页面, 返回给客户端进行展示</p>
+<p>但是, 服务器如何处理一个网站的诸多页面呢?</p>
+<p>首先，一个页面会有自己对应的网址, 也就是 URL，客户端发生请求时，URL 会发送到服务器，服务器通过正则对该URL 进行匹配且最后交给 Controller 进行处理，Controller 进行各种处理后，最终生成 HTML 或者数据，返回给前端，这就完成了一个IO操作，这种操作, 就是后端路由</p>
+<p><strong>后端路由的优点</strong></p>
+<p>当页面中需要请求不同的路径内容时，交给服务器来进行处理, 服务器渲染好整个页面，并且将页面返回给客户端，这种情况下渲染好的页面，不需要单独加载任何的 js 和 css，可以直接交给浏览器展示，这样也有利于 SEO 的优化</p>
+<p><strong>后端路由的缺点</strong></p>
+<ul>
+<li>整个页面的模块都要由后端人员来编写和维护，工作量太大</li>
+<li>前端开发人员如果要开发页面，需要通过 PHP 和 Java 等语言来编写页面代码，增加了额外的学习成本</li>
+<li>HTML 代码和数据以及对应的逻辑混在一起,，不利于编写和维护</li>
+</ul>
+<h4 id="前端路由阶段"><a href="#前端路由阶段" class="headerlink" title="前端路由阶段"></a>前端路由阶段</h4><p>前端路由的核心：改变URL，但是页面不进行整体的刷新</p>
+<h5 id="前后端分离阶段"><a href="#前后端分离阶段" class="headerlink" title="前后端分离阶段"></a>前后端分离阶段</h5><p>随着 Ajax 的出现，有了前后端分离的开发模式：后端只提供 API 来返回数据，前端通过 Ajax 获取数据，并且可以通过 JavaScript 将数据渲染到页面中</p>
+<p>优点：</p>
+<ul>
+<li>前后端责任变得很清晰，后端专注于数据上, 前端专注于交互和可视化上</li>
+<li>当移动端(iOS/Android)出现后，后端不需要进行任何处理， 依然使用之前的一套API即可</li>
+</ul>
+<h5 id="单页面富应用阶段"><a href="#单页面富应用阶段" class="headerlink" title="单页面富应用阶段"></a>单页面富应用阶段</h5><p>单页面富应用，即单页Web应用（single page web application，SPA），就是只有一张 Web 页面的应用，是加载单个 HTML 页面并在用户与应用程序交互时动态更新该页面的 Web 应用程序</p>
+<p>简单理解：就是在前后端分离的基础上加了一层前端路由</p>
+<p><strong>SPA的特点</strong></p>
+<ul>
+<li>速度：更好的用户体验，让用户在 web app 感受 native app 的速度和流畅</li>
+<li>·MVVM：经典 MVVM 开发模式，前后端各负其责</li>
+<li>·ajax：重前端，业务逻辑全部在本地操作，数据都需要通过AJAX同步、提交</li>
+<li>·路由：在 URL 中采用 # 号来作为当前视图的地址，改变 # 号后的参数，页面并不会重载</li>
+</ul>
+<p><strong>SPA 缺点</strong></p>
+<ul>
+<li>首屏渲染等待时长： 必须得加载完毕，才能渲染出首屏</li>
+<li>seo不友好：爬虫只能拿到一个 div，认为页面是空的，不利于 seo</li>
+<li>初次加载耗时多：为实现单页Web应用功能及显示效果，需要在加载页面的时候将 JavaScript、CSS 统一加载，部分页面可以在需要的时候加载，所以必须对 JavaScript 及 CSS 代码进行合并压缩处理，如果使用第三方库，建议使用一些大公司的 CDN，因此带宽的消耗是必然的</li>
+</ul>
+<p><strong>SPA 优点</strong></p>
+<ul>
+<li>良好的交互体验<br>：用户不需要重新刷新页面，获取数据也是通过 Ajax 异步获取，页面显示流畅</li>
+<li>良好的前后端工作分离模式：单页 Web 应用可以和 RESTful 规约一起使用，通过 REST API 提供接口数据，并使用 Ajax 异步获取，这样有助于分离客户端和服务器端工作，更进一步，可以在客户端也可以分解为静态页面和页面交互两个部分</li>
+<li>减轻服务器压力：服务器只用出数据就可以，不用管展示逻辑和页面合成，吞吐能力会提高几倍</li>
+<li>共用一套后端程序代码：不用修改后端程序代码就可以同时用于 Web 界面、手机、平板等多种客户端</li>
+</ul>
+<h3 id="改变-URL，页面不刷新"><a href="#改变-URL，页面不刷新" class="headerlink" title="改变 URL，页面不刷新"></a>改变 URL，页面不刷新</h3><h4 id="URL-的-hash"><a href="#URL-的-hash" class="headerlink" title="URL 的 hash"></a>URL 的 hash</h4><p>URL 的 hash 也就是锚点(#)，本质上是改变 window.location 的 href 属性，可以通过直接赋值 location.hash 来改变 href，但是页面不发生刷新</p>
+<p><img src="https://i.loli.net/2020/03/09/TB28PpVIKmfjvg3.png" alt="图片.png"></p>
+<h4 id="HTML5-的-history-模式"><a href="#HTML5-的-history-模式" class="headerlink" title="HTML5 的 history 模式"></a>HTML5 的 history 模式</h4><p>history 接口是 HTML5 新增的，它有五种模式改变 URL 而不刷新页面（具体有点像浏览器的前进和后退）</p>
+<ul>
+<li><code>history.pushState()</code>，相当于入栈的操作（出入栈相当于往一个杯子里加东西，只有一个出入口，后进的会在先进的上面），遵循后进先出的规则，会保存历史记录，可以返回</li>
+</ul>
+<p><img src="https://i.loli.net/2020/03/09/I2HEyRPNlBSoYzW.png" alt="图片.png"></p>
+<ul>
+<li><code>history.replaceState()</code>，同 <code>pushState()</code> 不保存历史记录，不能返回</li>
+<li><code>history.forward()</code> 可以前进到下一个记录的地址</li>
+<li><code>history.back()</code>，相当于出栈的操作，遵循后进先出的规则，可以返回上一个记录的地址</li>
+<li><code>history.go()</code> 功能等价于 <code>history.back</code> ，但是可以通过参数来进行具体的跳转</li>
+</ul>
+<p><img src="https://i.loli.net/2020/03/09/NT4C5Omlua6LqiU.png" alt="图片.png"></p>
+<h2 id="Vue-router-基本使用"><a href="#Vue-router-基本使用" class="headerlink" title="Vue-router 基本使用"></a>Vue-router 基本使用</h2><p>目前前端流行的三大框架，都有自己的路由实现：</p>
+<ul>
+<li>Angular：ngRouter</li>
+<li>React：ReactRouter</li>
+<li>Vue：vue-router</li>
+</ul>
+<p>vue-router 是 Vue.js 官方的路由插件，它和 vue.js 是深度集成的，适合用于构建单页面富应用程序</p>
+<p>vue-router 是基于路由和组件的，路由用于设定访问路径, 将路径和组件映射起来，在 vue-router 的单页面应用中, 页面路径的改变就是组件的切换</p>
+<h3 id="安装-vue-router"><a href="#安装-vue-router" class="headerlink" title="安装 vue-router"></a>安装 vue-router</h3><p>直接使用 npm 来安装路由即可</p>
+<ol>
+<li>安装 vue-router</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install vue-router --save</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在模块化工程中使用</li>
+</ol>
+<p>因为 vue-router 是一个插件，所以可以通过 <code>Vue.use()</code> 来安装路由功能</p>
+<ol>
+<li>导入路由对象，并且调用 Vue.use(VueRouter)</li>
+<li>创建路由实例，并且传入路由映射配置</li>
+<li>在 Vue 实例中挂载创建的路由实例</li>
+</ol>
+<h3 id="使用-vue-router"><a href="#使用-vue-router" class="headerlink" title="使用 vue-router"></a>使用 vue-router</h3><ol>
+<li>创建路由组件</li>
+</ol>
+<ul>
+<li>创建 router 实例</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/trwjAfsD9CH4JIV.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>挂载到 Vue 实例中</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/AGsDHka2nPRLv5f.png" alt="img" style="zoom:67%;" />
+
+
+
+<ol start="2">
+<li>配置路由映射: 组件和路径映射关系</li>
+</ol>
+<ul>
+<li>新建两个组件</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/9cDpjsJ3t1EvC84.png" alt="img"  />
+
+<ul>
+<li>为组件配置路由映射关系</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/VC1RxqcaPSIBOjY.png" alt="img" style="zoom:67%;" />
+
+
+
+<ol start="3">
+<li>使用路由: 通过<code>&lt;router-link&gt;</code>和<code>&lt;router-view&gt;</code></li>
+</ol>
+<ul>
+<li><code>&lt;router-link&gt;</code>: 该标签是一个 vue-router 中已经内置的组件, 它默认会被渲染成一个 <code>&lt;a&gt;</code> 标签</li>
+<li><code>&lt;router-view&gt;</code>: 该标签会根据当前的路径，动态渲染出不同的组件，放置的位置决定渲染的位置</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/XbofSjkwE5W76Fe.png" alt="img" style="zoom:67%;" />
+
+<p>最终效果如下：</p>
+<img src="https://i.loli.net/2020/03/09/5Nbf8EOn2xeGJwK.png" alt="img" style="zoom:67%;" />
+
+
+
+<h3 id="细节处理"><a href="#细节处理" class="headerlink" title="细节处理"></a>细节处理</h3><h4 id="路由的默认路径"><a href="#路由的默认路径" class="headerlink" title="路由的默认路径"></a>路由的默认路径</h4><p>默认情况下, 进入网站的首页，我们希望 <code>&lt;router-view&gt;</code> 渲染首页的内容，但是在上面的实现中，默认没有显示首页组件，必须让用户点击才可以</p>
+<p>如何可以让路径默认跳到到首页，并且<code>&lt;router-view&gt;</code>渲染首页组件呢?</p>
+<p>只需要多配置一个映射就可以了：</p>
+<p><img src="https://i.loli.net/2020/03/09/fWSOVEsakT1U2Cb.png" alt="图片.png"></p>
+<p>我们在 routes 中又配置了一个映射：</p>
+<ul>
+<li>path：根路径 <code>/</code></li>
+<li>redirect：重定向，也就是将根路径重定向到 <code>/home</code> 的路径下</li>
+</ul>
+<p>这样，打开页面时，就会默认显示首页的内容了</p>
+<h4 id="HTML5-的-History-模式"><a href="#HTML5-的-History-模式" class="headerlink" title="HTML5 的 History 模式"></a>HTML5 的 History 模式</h4><p>前面说过改变路径的方式有两种：</p>
+<ul>
+<li>URL 的 hash</li>
+<li>HTML5 的 history</li>
+</ul>
+<p>默认情况下，Vue 路径的改变使用的是 URL 的 hash，这样显示出的页面的地址中有一个 <code>#</code> 号，不太美观：</p>
+<p><img src="https://i.loli.net/2020/03/09/L2qsSMwQpOakzIK.png" alt="图片.png"></p>
+<p>可以使用 HTML5 的 history 模式来进行改变，进行如下配置即可：</p>
+<p><img src="https://i.loli.net/2020/03/09/PI6d5uNkF8rnSQc.png" alt="图片.png"></p>
+<p><img src="https://i.loli.net/2020/03/09/ZPOdbyCv3j4XhMJ.png" alt="图片.png"></p>
+<h3 id="router-link-补充"><a href="#router-link-补充" class="headerlink" title="router-link 补充"></a>router-link 补充</h3><p>在前面的 <code>&lt;router-link&gt;</code> 中，我们只是使用了一个属性<code>:to</code>，用于指定跳转的路径</p>
+<p><code>&lt;router-link&gt;</code> 还有一些其他属性：</p>
+<ul>
+<li><p>tag：tag 可以指定 <code>&lt;router-link&gt;</code> 之后渲染成什么组件，默认是渲染为 <code>&lt;a&gt;&lt;/a&gt;</code> 标签</p>
+<p>我们可以使用 <code>tag=&quot;button&quot;</code>、<code>tag=&quot;li&quot;</code> 来改变</p>
+</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/WTZzycJX5AvxlKG.png" alt="img" style="zoom:67%;" />
+
+<p><img src="https://i.loli.net/2020/03/13/pWwKIosetLrPNBG.png" alt="图片.png"></p>
+<ul>
+<li><p>replace</p>
+<p>默认使用的是 HTML5 的 history 模式下的 pushState，可以通过浏览器进行返回和前进，如果想要禁用返回和前进，可以指定 replace 即可</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;router-link to&#x3D;&quot;&#x2F;home&quot; tag&#x3D;&quot;button&quot; replace&gt;首页&lt;&#x2F;router-link&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>active-class: 当<code>&lt;router-link&gt;</code>对应的路由匹配成功时，会自动给当前元素设置一个 <code>router-link-active</code> 的class</li>
+</ul>
+<p><img src="https://i.loli.net/2020/03/13/X6UhO2ACutJjzEr.png" alt="img"></p>
+<p>设置 <code>active-class</code> 可以修改默认的名称：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;router-link to&#x3D;&quot;&#x2F;home&quot; tag&#x3D;&quot;button&quot; active-class&#x3D;&quot;active&quot;&gt;首页&lt;&#x2F;router-link&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/03/13/QBl7CiMpObc41zd.png" alt="img"></p>
+<p>在进行高亮显示的导航菜单或者底部 tabbar 时，会使用到该类，比如想设置按钮点击时变为红色：</p>
+<img src="https://i.loli.net/2020/03/13/Rrv7qxWVXlaTiLm.png" alt="img" style="zoom:67%;" />
+
+<p><img src="https://i.loli.net/2020/03/13/8xyzG7oQFwEsqUh.png" alt="图片.png"></p>
+<p>该 class 具体的名称也可以通过 router 实例的属性进行统一修改：</p>
+<p><img src="https://i.loli.net/2020/03/13/Iz6NlHTrqFePxLk.png" alt="图片.png"></p>
+<p>但是通常不会修改类的属性, 会直接使用默认的 router-link-active 即可</p>
+<h3 id="路由代码跳转"><a href="#路由代码跳转" class="headerlink" title="路由代码跳转"></a><strong>路由代码跳转</strong></h3><p>有时候，页面的跳转可能需要执行对应的 JavaScript 代码，这个时候，就可以使用第二种跳转方式了,比如，我们将代码修改如下：</p>
+<img src="https://i.loli.net/2020/03/13/WZrnv4Kji8omgzY.png" alt="img" style="zoom:67%;" />
+
+<p><code>$router</code> 属性已经被 vue-router 嵌套进所有的组件中，可以在组件中直接使用</p>
+<p>这里如果想禁用浏览器前进后退的功能的话，可以使用<code>this.$router.replace(&#39;/home&#39;)</code> 即可</p>
+<h3 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h3><p><a name="params"></a></p>
+<p><a href="#canshu">参数传递</a></p>
+<p>在某些情况下，一个页面的 path 路径可能是不确定的，比如我们进入用户界面时，希望是如下的路径：<code>/user/aaaa</code> 或 <code>/user/bbbb</code>，除了有前面的 <code>/user</code>之外，后面还跟上了用户的 ID</p>
+<p>这种 path 和 Component 的匹配关系，称之为动态路由（也是路由传递数据的一种方式）</p>
+<ol>
+<li>在 <code>vue-router</code> 的路由路径中使用“动态路径参数”(dynamic segment) ：</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/Rl7cuvWTpJNUMBZ.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>在组件中手动绑定一个用户 ID：</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/1ih5ldmq7zZfAU2.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>更新 <code>User</code> 的模板，输出当前用户的 ID：</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/uSHeWkDx7R9Unpo.png" alt="img" style="zoom:67%;" />
+
+<ol start="4">
+<li>查看显示效果：</li>
+</ol>
+<p><img src="https://i.loli.net/2020/03/13/u7swmgkySfdYHEC.png" alt="图片.png"></p>
+<h3 id="路由的懒加载"><a href="#路由的懒加载" class="headerlink" title="路由的懒加载"></a>路由的懒加载</h3><h4 id="认识路由的懒加载"><a href="#认识路由的懒加载" class="headerlink" title="认识路由的懒加载"></a>认识路由的懒加载</h4><p>当打包构建应用时，Javascript 包会变得非常大，影响页面加载，如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了</p>
+<p>为了实现这种效果，我们可以使用路由的懒加载</p>
+<p>路由懒加载的主要作用就是将路由对应的组件打包成一个个的 js 代码块，只有在这个路由被访问到的时候，才加载对应的组件</p>
+<h4 id="懒加载的三种写法"><a href="#懒加载的三种写法" class="headerlink" title="懒加载的三种写法"></a>懒加载的三种写法</h4><ol>
+<li>结合 Vue 的异步组件和 Webpack 的代码分析（早期的懒加载写法，能认识就行，不要求会写）</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = <span class="function"><span class="params">resolve</span> =&gt;</span> &#123; <span class="built_in">require</span>.ensure([<span class="string">'../components/Home.vue'</span>], () =&gt; &#123; resolve(<span class="built_in">require</span>(<span class="string">'../components/Home.vue'</span>)) &#125;)&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>AMD 写法</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> About = <span class="function"><span class="params">resolve</span> =&gt;</span> <span class="built_in">require</span>([<span class="string">'../components/About.vue'</span>], resolve);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在ES6中，可以用更加简单的写法来组织 Vue 异步组件和 Webpack 的代码分割</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../components/Home.vue'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>路由懒加载的效果</strong></p>
+<img src="https://i.loli.net/2020/03/13/8dgnHwYQU4vDiPM.png" alt="img" style="zoom:67%;" />
+
+<h2 id="Vue-router-嵌套路由"><a href="#Vue-router-嵌套路由" class="headerlink" title="Vue-router 嵌套路由"></a>Vue-router 嵌套路由</h2><p>嵌套路由是一个很常见的功能，比如在 home 页面中，我们希望通过 <code>/home/news</code> 和 <code>/home/message</code> 访问一些内容，一个路径映射一个组件，访问这两个路径也会分别渲染两个组件</p>
+<p>路径和组件的关系如下:</p>
+<img src="https://i.loli.net/2020/03/13/32xXWELcQiNbaKo.png" alt="img" style="zoom: 80%;" />
+
+<p>实现嵌套路由有两个步骤：</p>
+<ol>
+<li>创建对应的子组件，并且在路由映射中配置对应的子路由</li>
+</ol>
+<ul>
+<li>定义两个子组件</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/wS4HK7pOeREn2yk.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>配置子组件的路由</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/7SMhQsHR8pVOTFY.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>配置嵌套路由的默认路径</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/9fFGTNKd2akD47S.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>在父组件内部显示子组件</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/mxwQEecNFzuRqyj.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>查看显示效果</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/xu3IHwPfy12BLAX.png" alt="img" style="zoom:67%;" />
+
+<h2 id="Vue-router-参数传递"><a href="#Vue-router-参数传递" class="headerlink" title="Vue-router 参数传递"></a>Vue-router 参数传递</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>为了演示传递参数，再创建一个组件，并且将其配置好</p>
+<ol>
+<li>创建新的组件 Profile.vue</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/A4qsbJXYlOfw3Qn.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>配置路由映射</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/daknbYPph8cAOE1.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>添加跳转的<code>&lt;router-link&gt;</code></li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/wKxQCzkt2filIoP.png" alt="img" style="zoom:67%;" />
+
+
+
+<h3 id="传递参数的方式"><a href="#传递参数的方式" class="headerlink" title="传递参数的方式"></a>传递参数的方式</h3><p>传递参数主要有两种类型: params 和 query</p>
+<p>如果数据简单且少使用 params ，如果数据较多就使用 query</p>
+<ul>
+<li><p>params </p>
+<p><a name="canshu"></a></p>
+<p><a href="#params">跳转到详细使用</a></p>
+<ul>
+<li>配置路由格式：<code>/router/:id</code></li>
+<li>传递的方式：在 path 后面跟上对应的值</li>
+<li>传递后形成的路径：<code>/router/123</code>，<code>/router/abc</code></li>
+</ul>
+</li>
+<li><p>query</p>
+<ul>
+<li>配置路由格式：<code>/router</code></li>
+<li>传递的方式：对象中使用 query 的 key 作为传递方式</li>
+<li>传递后形成的路径：<code>/router?id=123</code>，<code>/router?id=abc</code></li>
+</ul>
+</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/fOt1e3Y8DVrodxJ.png" alt="img" style="zoom:67%;" />
+
+<p>这里获取并打印这些数据：</p>
+<img src="https://i.loli.net/2020/03/13/o5Tp9QuYqf4jKGP.png" alt="img" style="zoom:67%;" />
+
+<img src="https://i.loli.net/2020/03/13/9T4bD3urlFs8Q5N.png" alt="img" style="zoom:67%;" />
+
+<p><strong>获取参数</strong></p>
+<p>获取参数是通过 <em>route</em> 对象获取的，在使用了 <em>vue_−_router</em> 的应用中，路由对象会被注入每个组件中，赋值为<code>_this_.route</code> ，并且当路由切换时，路由对象会被更新</p>
+<p><strong>route 和 router 的区别</strong></p>
+<ul>
+<li><em>$router</em> 为 VueRouter 实例，想要导航到不同 URL，则使用 <code>router.push</code> 方法</li>
+<li>$route 为当前 router 跳转对象，是当前处于活跃的路由，里面可以获取 name、path、query、params 等</li>
+</ul>
+<h2 id="Vue-router-导航守卫"><a href="#Vue-router-导航守卫" class="headerlink" title="Vue-router 导航守卫"></a>Vue-router 导航守卫</h2><p>在一个 SPA 应用中，如何改变网页的标题呢？</p>
+<p>普通的修改方式：在每一个路由对应的组件 <code>.vue</code> 文件中，通过 mounted 声明周期函数，执行对应的代码进行修改</p>
+<p>但是当页面比较多时，需要在多个页面执行类似的代码，所以这种方式不容易维护</p>
+<p>更好的办法是使用导航守卫</p>
+<h3 id="什么是导航守卫"><a href="#什么是导航守卫" class="headerlink" title="什么是导航守卫"></a>什么是导航守卫</h3><p>导航守卫主要用来监听路由的进入和离开，vue-router 提供了 beforeEach 和 afterEach 的钩子函数，它们会在路由即将改变前和改变后触发</p>
+<h3 id="导航守卫使用"><a href="#导航守卫使用" class="headerlink" title="导航守卫使用"></a>导航守卫使用</h3><p>我们可以利用 beforeEach 来完成标题的修改：</p>
+<ol>
+<li>在钩子当中利用 meta 来定义标题</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/PdjigxO2n3LSHYR.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>利用导航守卫，修改标题</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/fWqJmEc9y6SRbDr.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>查看修改效果</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/MC3eIhrTGstDBcq.png" alt="img" style="zoom:67%;" />
+
+
+
+<h3 id="导航钩子的三个参数解析"><a href="#导航钩子的三个参数解析" class="headerlink" title="导航钩子的三个参数解析"></a>导航钩子的三个参数解析</h3><ul>
+<li>to: 即将要进入的目标的路由对象</li>
+<li>from: 当前导航即将要离开的路由对象</li>
+<li>next: 调用该方法后，才能进入下一个钩子</li>
+</ul>
+<h3 id="导航守卫补充"><a href="#导航守卫补充" class="headerlink" title="导航守卫补充"></a>导航守卫补充</h3><ul>
+<li>如果是后置钩子，也就是afterEach，不需要主动调用 next() 函数</li>
+<li>beforEach 必须要调用 next() 函数，不然就会终止，不会往下执行</li>
+<li>上面使用的导航守卫，被称之为全局守卫，除此之外，还有路由独享的守卫、组件内的守卫</li>
+</ul>
+<h2 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a>keep-alive</h2><p>keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，或避免重新渲染</p>
+<p>router-view 也是一个组件，如果直接被包在 keep-alive 里面，所有路径匹配到的视图组件都会被缓存：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;keep-alive&gt;</span><br><span class="line">  &lt;router-view&gt;</span><br><span class="line">    &lt;!-- 所有路径匹配到的试图组件都会被缓存！ --&gt;</span><br><span class="line">  &lt;&#x2F;router-view&gt;</span><br><span class="line">&lt;&#x2F;keep-alive&gt;</span><br></pre></td></tr></table></figure>
+
+<p>现在有这样一个需求：首页正正在显示的是被嵌套的消息路由，当我们点击其他页面，又重新点击首页时，让首页仍然显示被嵌套的消息路由</p>
+<img src="https://i.loli.net/2020/03/13/57zJr6jbOMS3maA.png" alt="img" style="zoom:67%;" />
+
+<ol>
+<li>先取消嵌套路由的默认路径</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/2xtDMhkwX6lpyre.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>在 App.vue 中使用 <code>&lt;keep-alive&gt;&lt;/keep-alive&gt;</code> 包裹 <code>&lt;router-view/&gt;</code></li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/7IA2pdNK5FH63aC.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>在 Home.vue 中记录离开之前的路径</li>
+</ol>
+<p><code>activated</code>：当组件处于活跃的时候调用，只有在使用 keep-alive 的前提下才有作用</p>
+<p><code>deactivated</code>：当组件不是活跃的时候调用，同上</p>
+<p><code>beforeRouteLeave</code>：在离开之前调用</p>
+<img src="https://i.loli.net/2020/03/13/7VnspvNE5X68CBG.png" alt="img" style="zoom:67%;" />
+
+<p>keep-alive 还有两个非常重要的属性:</p>
+<ul>
+<li>include - 字符串或正则表达，只有匹配的组件会被缓存</li>
+<li>exclude - 字符串或正则表达式，任何匹配的组件都不会被缓存</li>
+</ul>
+<p>让部分组件不缓存：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 这里传的参数是组件里的 name 属性的值，如果需要传入多个组件的话，逗号后面不要留空格，不然会出现问题</span><br><span class="line">&lt;keep-alive exclude&#x3D;&quot;Profile,User&quot;&gt;</span><br><span class="line">  &lt;router-view&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;keep-alive&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VueCli</title>
+    <url>/2020/03/13/VueCli/</url>
+    <content><![CDATA[<center>
+<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
+
+
+<p>Vue Cli （脚手架）的使用</p>
+</center>
+<a id="more"></a>
+
+
+
+<h1 id="Vue-CLI"><a href="#Vue-CLI" class="headerlink" title="Vue CLI"></a>Vue CLI</h1><h2 id="什么是-Vue-CLI"><a href="#什么是-Vue-CLI" class="headerlink" title="什么是 Vue CLI"></a>什么是 Vue CLI</h2><p>如果你只是简单写几个 Vue 的 Demo 程序, 那么你不需要 Vue CLI如果你在开发大型项目, 那么你需要, 并且必然需要使用 Vue CLI</p>
+<p>使用 Vue.js 开发大型应用时，我们需要考虑代码目录结构、项目结构和部署、热加载、代码单元测试等事情，如果每个项目都要手动完成这些工作，效率比较低，所以通常我们会使用一些脚手架工具来帮助完成这些事情</p>
+<p><strong>CLI 是什么意思</strong></p>
+<p>CLI 是 Command-Line Interface , 翻译为命令行界面, 俗称脚手架</p>
+<p>Vue CLI 是一个官方发布的 vue.js 项目脚手架</p>
+<p>使用 vue-cli 可以快速搭建 Vue 开发环境以及对应的 webpack 配置</p>
+<p>Vue CLI 使用前提：</p>
+<ul>
+<li>Node</li>
+<li>webpack</li>
+</ul>
+<h2 id="Vue-CLI-的使用"><a href="#Vue-CLI-的使用" class="headerlink" title="Vue CLI 的使用"></a>Vue CLI 的使用</h2><h3 id="安装-Vue-脚手架"><a href="#安装-Vue-脚手架" class="headerlink" title="安装 Vue 脚手架"></a>安装 Vue 脚手架</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g @vue/cli</span><br></pre></td></tr></table></figure>
+
+<p>注意：上面安装的是 Vue CLI3 以上的版本，如果需要想按照 Vue CLI2 的方式初始化项目，还需要拉取 2.x 的模板</p>
+<h3 id="拉取-2-x-模板（旧版本）"><a href="#拉取-2-x-模板（旧版本）" class="headerlink" title="拉取 2.x 模板（旧版本）"></a>拉取 2.x 模板（旧版本）</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i @vue/cli-init -g</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h3><h4 id="Vue-CLI2-初始化项目"><a href="#Vue-CLI2-初始化项目" class="headerlink" title="Vue CLI2 初始化项目"></a>Vue CLI2 初始化项目</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vue init webpack vuecli2test</span><br></pre></td></tr></table></figure>
+
+<p><strong>vue cli 2 项目详解</strong></p>
+<p><img src="https://i.loli.net/2020/03/08/4YQETKHsGjcvdhJ.png" alt="img"></p>
+<p><strong>vue cli 2 目录详解</strong></p>
+<img src="https://i.loli.net/2020/03/08/6JHcwRa1sYW9rBU.png" alt="img" style="zoom:67%;" />
+
+<h4 id="Vue-CLI3-初始化项目"><a href="#Vue-CLI3-初始化项目" class="headerlink" title="Vue CLI3 初始化项目"></a>Vue CLI3 初始化项目</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vue create vuecli3test</span><br></pre></td></tr></table></figure>
+
+<p>vue-cli 3 与 2 版本有很大区别：</p>
+<ul>
+<li>vue-cli 3 是基于 webpack 4 打造，vue-cli 2 还是 webapck 3</li>
+<li>vue-cli 3 的设计原则是“0配置”，移除了根目录下的 build 和 config 等的配置文件目录</li>
+<li>vue-cli 3 提供了 vue ui 命令，提供了可视化配置，更加人性化</li>
+<li>移除了 static 文件夹，新增了 public 文件夹，并且 index.html 移动到 public 中</li>
+</ul>
+<p><strong>vue cli 3 项目详解</strong></p>
+<p><img src="https://i.loli.net/2020/03/08/rSTRPKo6E8Od54B.png" alt="图片1"></p>
+<img src="https://i.loli.net/2020/03/08/v59h3Hz8lMICk7f.png" alt="img" style="zoom:67%;" />
+
+
+
+<p><strong>如何删除保存的配置单呢？</strong></p>
+<img src="https://i.loli.net/2020/03/08/PlOgVm6C2e4fZH3.png" alt="删除" style="zoom:67%;" />
+
+
+
+<p><strong>vue cli 3 目录详解</strong></p>
+<img src="https://i.loli.net/2020/03/08/s8uyMxXVG1WJQlp.png" alt="img" style="zoom:67%;" />
+
+<p>main.js 里的 <code>Vue.config.productionTip = false</code> 用来设置产品在构建的时候是否要显示提示信息，开发阶段一般设置为 <code>false</code></p>
+<h3 id="CLI-相关配置"><a href="#CLI-相关配置" class="headerlink" title="CLI 相关配置"></a>CLI 相关配置</h3><h4 id="Runtime-Compiler-和-Runtime-only-的区别"><a href="#Runtime-Compiler-和-Runtime-only-的区别" class="headerlink" title="Runtime-Compiler 和 Runtime-only 的区别"></a>Runtime-Compiler 和 Runtime-only 的区别</h4><p>构建项目时：</p>
+<p><img src="https://i.loli.net/2020/03/08/tswErpoXe7PzW91.png" alt="img"></p>
+<p>官方解释：</p>
+<img src="https://i.loli.net/2020/03/08/6DpNEat8uAm7HX2.png" alt="img" style="zoom:67%;" />
+
+<p>简单总结：</p>
+<ul>
+<li>如果在之后的开发中，你依然使用 template，就需要选择 Runtime-Compiler</li>
+<li>如果你之后的开发中，使用的是 .vue 文件开发，那么可以选择 Runtime-only</li>
+</ul>
+<p><strong>render 和 template</strong></p>
+<p><img src="https://i.loli.net/2020/03/08/4HFCxt91WEmJcQa.png" alt="img"></p>
+<p><strong>Vue 程序运行过程</strong></p>
+<p><img src="https://i.loli.net/2020/03/08/DYViX6tFPZl9vKA.png" alt="img" style="zoom:67%;" /><strong>render 函数的使用</strong></p>
+<img src="https://i.loli.net/2020/03/08/EIVKMgqybhQGT8r.png" alt="img" style="zoom:67%;" />
+
+
+
+<h4 id="npm-run-build"><a href="#npm-run-build" class="headerlink" title="npm run build"></a>npm run build</h4><img src="https://i.loli.net/2020/03/08/LnqV96wc3MYobhk.png" alt="img" style="zoom:67%;" />
+
+
+
+<h4 id="npm-run-dev"><a href="#npm-run-dev" class="headerlink" title="npm run dev"></a>npm run dev</h4><img src="https://i.loli.net/2020/03/08/KH81pw3gOWdzB64.png" alt="img" style="zoom:67%;" />
+
+
+
+<h4 id="配置文件去向"><a href="#配置文件去向" class="headerlink" title="配置文件去向"></a>配置文件去向</h4><p>在 Vue CLI 3 中，webpack 等相关配置文件被隐藏起来了，如果想查看或修改相关配置，可以通过以下3种方式：</p>
+<ol>
+<li>从 UI 界面上修改</li>
+</ol>
+<ul>
+<li>启动配置服务器：<code>vue ui</code></li>
+<li>进入 Vue 项目管理器，导入我们的项目：</li>
+</ul>
+<img src="https://i.loli.net/2020/03/08/SGPuoflaDrUjgQ2.png" alt="img" style="zoom:67%;" />
+
+
+
+<ul>
+<li>然后可以在配置中查看或修改我们的 webpack 等配置：</li>
+</ul>
+<img src="https://i.loli.net/2020/03/08/GmovU7cRCLKlsij.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>在 node_modules 中寻找</li>
+</ol>
+<img src="https://i.loli.net/2020/03/08/hHYlO8tTuNdfvxy.png" alt="img" style="zoom:67%;" />
+
+
+
+<ol start="3">
+<li>在项目中新建一个 vue.config.js 文件，将需要修改的配置代码写入其中</li>
+</ol>
+<img src="https://i.loli.net/2020/03/08/dMoz4aNZEBpWv28.png" alt="img" style="zoom:67%;" />
+
+<p>最终编译时会自动将我们添加的代码与隐藏的代码进行合并</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue组件化开发</title>
     <url>/2020/03/08/Vue%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91/</url>
     <content><![CDATA[<center> 
@@ -240,7 +1123,7 @@
 <img src="https://i.loli.net/2020/03/08/Ly8HFt3KjnZPgGQ.jpg" style="zoom: 80%;"/>
 
 
-<p>webpack 模块化开发使用方法</p>
+<p>webpack3 模块化开发使用方法</p>
 </center>
 <a id="more"></a>iamyujian
 
@@ -4198,8 +5081,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>前端</tag>
         <tag>JS</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -4739,8 +5622,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>前端</tag>
         <tag>JS</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -5617,8 +6500,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>前端</tag>
         <tag>JS</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -5897,8 +6780,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>前端</tag>
         <tag>JS</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -6599,8 +7482,8 @@ switch 语句在比较值时使用的是全等操作符, 因此不会发生类�
         <category>前端</category>
       </categories>
       <tags>
-        <tag>前端</tag>
         <tag>JS</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>

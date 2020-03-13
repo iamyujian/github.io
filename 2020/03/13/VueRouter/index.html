@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32X32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16X16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.1","exturl":true,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "e2de3bae"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="Vue router （路由）的使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue router">
+<meta property="og:url" content="http://yoursite.com/2020/03/13/VueRouter/index.html">
+<meta property="og:site_name" content="锦瑟">
+<meta property="og:description" content="Vue router （路由）的使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/TB28PpVIKmfjvg3.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/I2HEyRPNlBSoYzW.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/NT4C5Omlua6LqiU.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/trwjAfsD9CH4JIV.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/AGsDHka2nPRLv5f.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/9cDpjsJ3t1EvC84.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/VC1RxqcaPSIBOjY.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/XbofSjkwE5W76Fe.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/5Nbf8EOn2xeGJwK.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/fWSOVEsakT1U2Cb.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/L2qsSMwQpOakzIK.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/PI6d5uNkF8rnSQc.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/ZPOdbyCv3j4XhMJ.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/WTZzycJX5AvxlKG.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/pWwKIosetLrPNBG.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/X6UhO2ACutJjzEr.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/QBl7CiMpObc41zd.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/Rrv7qxWVXlaTiLm.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/8xyzG7oQFwEsqUh.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/Iz6NlHTrqFePxLk.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/WZrnv4Kji8omgzY.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/Rl7cuvWTpJNUMBZ.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/1ih5ldmq7zZfAU2.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/uSHeWkDx7R9Unpo.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/u7swmgkySfdYHEC.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/8dgnHwYQU4vDiPM.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/32xXWELcQiNbaKo.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/wS4HK7pOeREn2yk.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/7SMhQsHR8pVOTFY.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/9fFGTNKd2akD47S.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/mxwQEecNFzuRqyj.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/xu3IHwPfy12BLAX.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/A4qsbJXYlOfw3Qn.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/daknbYPph8cAOE1.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/wKxQCzkt2filIoP.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/fOt1e3Y8DVrodxJ.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/o5Tp9QuYqf4jKGP.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/9T4bD3urlFs8Q5N.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/PdjigxO2n3LSHYR.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/fWqJmEc9y6SRbDr.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/MC3eIhrTGstDBcq.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/57zJr6jbOMS3maA.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/2xtDMhkwX6lpyre.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/7IA2pdNK5FH63aC.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/7VnspvNE5X68CBG.png">
+<meta property="article:published_time" content="2020-03-13T14:53:40.000Z">
+<meta property="article:modified_time" content="2020-03-13T14:55:19.556Z">
+<meta property="article:author" content="余健">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/13/VueRouter/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Vue router | 锦瑟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<!-- 点击爆炸效果 -->
+  <!--  -->
+
+
+<link rel="alternate" href="/atom.xml" title="锦瑟" type="application/atom+xml">
+</head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">锦瑟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right"></div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section">标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section">归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2lhbXl1amlhbg==" title="My GitHub" aria-label="My GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/13/VueRouter/">
+    
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="余健">
+      <meta itemprop="description" content="沧海月明珠有泪，蓝田日暖玉生烟。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="锦瑟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Vue router
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-13 22:53:40 / 修改时间：22:55:19" itemprop="dateCreated datePublished" datetime="2020-03-13T22:53:40+08:00">2020-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>
+<img src="https://i.loli.net/2020/03/06/DBnjol4tUpivVON.jpg" style="zoom:80%;" />
+
+
+<p>Vue router （路由）的使用</p>
+</center>
+<a id="more"></a>
+
+
+
+<h1 id="Vue-router"><a href="#Vue-router" class="headerlink" title="Vue-router"></a>Vue-router</h1><h2 id="认识路由"><a href="#认识路由" class="headerlink" title="认识路由"></a>认识路由</h2><h3 id="什么是路由"><a href="#什么是路由" class="headerlink" title="什么是路由"></a>什么是路由</h3><blockquote>
+<p>路由（routing）就是通过互联的网络把信息从源地址传输到目的地址的活动   — 维基百科</p>
+</blockquote>
+<p>路由器提供了两种机制， 路由和转发</p>
+<ul>
+<li>路由是决定数据包从来源到目的地的路径</li>
+<li>转发将输入端的数据转移到合适的输出端</li>
+</ul>
+<h3 id="网站发展的几个阶段"><a href="#网站发展的几个阶段" class="headerlink" title="网站发展的几个阶段"></a>网站发展的几个阶段</h3><h4 id="后端路由阶段"><a href="#后端路由阶段" class="headerlink" title="后端路由阶段"></a>后端路由阶段</h4><p><strong>什么是后端路由</strong></p>
+<p>早期的网站开发，整个 HTML 页面都是是由服务器来渲染的，服务器直接生产渲染好对应的 HTML 页面, 返回给客户端进行展示</p>
+<p>但是, 服务器如何处理一个网站的诸多页面呢?</p>
+<p>首先，一个页面会有自己对应的网址, 也就是 URL，客户端发生请求时，URL 会发送到服务器，服务器通过正则对该URL 进行匹配且最后交给 Controller 进行处理，Controller 进行各种处理后，最终生成 HTML 或者数据，返回给前端，这就完成了一个IO操作，这种操作, 就是后端路由</p>
+<p><strong>后端路由的优点</strong></p>
+<p>当页面中需要请求不同的路径内容时，交给服务器来进行处理, 服务器渲染好整个页面，并且将页面返回给客户端，这种情况下渲染好的页面，不需要单独加载任何的 js 和 css，可以直接交给浏览器展示，这样也有利于 SEO 的优化</p>
+<p><strong>后端路由的缺点</strong></p>
+<ul>
+<li>整个页面的模块都要由后端人员来编写和维护，工作量太大</li>
+<li>前端开发人员如果要开发页面，需要通过 PHP 和 Java 等语言来编写页面代码，增加了额外的学习成本</li>
+<li>HTML 代码和数据以及对应的逻辑混在一起,，不利于编写和维护</li>
+</ul>
+<h4 id="前端路由阶段"><a href="#前端路由阶段" class="headerlink" title="前端路由阶段"></a>前端路由阶段</h4><p>前端路由的核心：改变URL，但是页面不进行整体的刷新</p>
+<h5 id="前后端分离阶段"><a href="#前后端分离阶段" class="headerlink" title="前后端分离阶段"></a>前后端分离阶段</h5><p>随着 Ajax 的出现，有了前后端分离的开发模式：后端只提供 API 来返回数据，前端通过 Ajax 获取数据，并且可以通过 JavaScript 将数据渲染到页面中</p>
+<p>优点：</p>
+<ul>
+<li>前后端责任变得很清晰，后端专注于数据上, 前端专注于交互和可视化上</li>
+<li>当移动端(iOS/Android)出现后，后端不需要进行任何处理， 依然使用之前的一套API即可</li>
+</ul>
+<h5 id="单页面富应用阶段"><a href="#单页面富应用阶段" class="headerlink" title="单页面富应用阶段"></a>单页面富应用阶段</h5><p>单页面富应用，即单页Web应用（single page web application，SPA），就是只有一张 Web 页面的应用，是加载单个 HTML 页面并在用户与应用程序交互时动态更新该页面的 Web 应用程序</p>
+<p>简单理解：就是在前后端分离的基础上加了一层前端路由</p>
+<p><strong>SPA的特点</strong></p>
+<ul>
+<li>速度：更好的用户体验，让用户在 web app 感受 native app 的速度和流畅</li>
+<li>·MVVM：经典 MVVM 开发模式，前后端各负其责</li>
+<li>·ajax：重前端，业务逻辑全部在本地操作，数据都需要通过AJAX同步、提交</li>
+<li>·路由：在 URL 中采用 # 号来作为当前视图的地址，改变 # 号后的参数，页面并不会重载</li>
+</ul>
+<p><strong>SPA 缺点</strong></p>
+<ul>
+<li>首屏渲染等待时长： 必须得加载完毕，才能渲染出首屏</li>
+<li>seo不友好：爬虫只能拿到一个 div，认为页面是空的，不利于 seo</li>
+<li>初次加载耗时多：为实现单页Web应用功能及显示效果，需要在加载页面的时候将 JavaScript、CSS 统一加载，部分页面可以在需要的时候加载，所以必须对 JavaScript 及 CSS 代码进行合并压缩处理，如果使用第三方库，建议使用一些大公司的 CDN，因此带宽的消耗是必然的</li>
+</ul>
+<p><strong>SPA 优点</strong></p>
+<ul>
+<li>良好的交互体验<br>：用户不需要重新刷新页面，获取数据也是通过 Ajax 异步获取，页面显示流畅</li>
+<li>良好的前后端工作分离模式：单页 Web 应用可以和 RESTful 规约一起使用，通过 REST API 提供接口数据，并使用 Ajax 异步获取，这样有助于分离客户端和服务器端工作，更进一步，可以在客户端也可以分解为静态页面和页面交互两个部分</li>
+<li>减轻服务器压力：服务器只用出数据就可以，不用管展示逻辑和页面合成，吞吐能力会提高几倍</li>
+<li>共用一套后端程序代码：不用修改后端程序代码就可以同时用于 Web 界面、手机、平板等多种客户端</li>
+</ul>
+<h3 id="改变-URL，页面不刷新"><a href="#改变-URL，页面不刷新" class="headerlink" title="改变 URL，页面不刷新"></a>改变 URL，页面不刷新</h3><h4 id="URL-的-hash"><a href="#URL-的-hash" class="headerlink" title="URL 的 hash"></a>URL 的 hash</h4><p>URL 的 hash 也就是锚点(#)，本质上是改变 window.location 的 href 属性，可以通过直接赋值 location.hash 来改变 href，但是页面不发生刷新</p>
+<p><img src="https://i.loli.net/2020/03/09/TB28PpVIKmfjvg3.png" alt="图片.png"></p>
+<h4 id="HTML5-的-history-模式"><a href="#HTML5-的-history-模式" class="headerlink" title="HTML5 的 history 模式"></a>HTML5 的 history 模式</h4><p>history 接口是 HTML5 新增的，它有五种模式改变 URL 而不刷新页面（具体有点像浏览器的前进和后退）</p>
+<ul>
+<li><code>history.pushState()</code>，相当于入栈的操作（出入栈相当于往一个杯子里加东西，只有一个出入口，后进的会在先进的上面），遵循后进先出的规则，会保存历史记录，可以返回</li>
+</ul>
+<p><img src="https://i.loli.net/2020/03/09/I2HEyRPNlBSoYzW.png" alt="图片.png"></p>
+<ul>
+<li><code>history.replaceState()</code>，同 <code>pushState()</code> 不保存历史记录，不能返回</li>
+<li><code>history.forward()</code> 可以前进到下一个记录的地址</li>
+<li><code>history.back()</code>，相当于出栈的操作，遵循后进先出的规则，可以返回上一个记录的地址</li>
+<li><code>history.go()</code> 功能等价于 <code>history.back</code> ，但是可以通过参数来进行具体的跳转</li>
+</ul>
+<p><img src="https://i.loli.net/2020/03/09/NT4C5Omlua6LqiU.png" alt="图片.png"></p>
+<h2 id="Vue-router-基本使用"><a href="#Vue-router-基本使用" class="headerlink" title="Vue-router 基本使用"></a>Vue-router 基本使用</h2><p>目前前端流行的三大框架，都有自己的路由实现：</p>
+<ul>
+<li>Angular：ngRouter</li>
+<li>React：ReactRouter</li>
+<li>Vue：vue-router</li>
+</ul>
+<p>vue-router 是 Vue.js 官方的路由插件，它和 vue.js 是深度集成的，适合用于构建单页面富应用程序</p>
+<p>vue-router 是基于路由和组件的，路由用于设定访问路径, 将路径和组件映射起来，在 vue-router 的单页面应用中, 页面路径的改变就是组件的切换</p>
+<h3 id="安装-vue-router"><a href="#安装-vue-router" class="headerlink" title="安装 vue-router"></a>安装 vue-router</h3><p>直接使用 npm 来安装路由即可</p>
+<ol>
+<li>安装 vue-router</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-router --save</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在模块化工程中使用</li>
+</ol>
+<p>因为 vue-router 是一个插件，所以可以通过 <code>Vue.use()</code> 来安装路由功能</p>
+<ol>
+<li>导入路由对象，并且调用 Vue.use(VueRouter)</li>
+<li>创建路由实例，并且传入路由映射配置</li>
+<li>在 Vue 实例中挂载创建的路由实例</li>
+</ol>
+<h3 id="使用-vue-router"><a href="#使用-vue-router" class="headerlink" title="使用 vue-router"></a>使用 vue-router</h3><ol>
+<li>创建路由组件</li>
+</ol>
+<ul>
+<li>创建 router 实例</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/trwjAfsD9CH4JIV.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>挂载到 Vue 实例中</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/AGsDHka2nPRLv5f.png" alt="img" style="zoom:67%;" />
+
+
+
+<ol start="2">
+<li>配置路由映射: 组件和路径映射关系</li>
+</ol>
+<ul>
+<li>新建两个组件</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/9cDpjsJ3t1EvC84.png" alt="img"  />
+
+<ul>
+<li>为组件配置路由映射关系</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/VC1RxqcaPSIBOjY.png" alt="img" style="zoom:67%;" />
+
+
+
+<ol start="3">
+<li>使用路由: 通过<code>&lt;router-link&gt;</code>和<code>&lt;router-view&gt;</code></li>
+</ol>
+<ul>
+<li><code>&lt;router-link&gt;</code>: 该标签是一个 vue-router 中已经内置的组件, 它默认会被渲染成一个 <code>&lt;a&gt;</code> 标签</li>
+<li><code>&lt;router-view&gt;</code>: 该标签会根据当前的路径，动态渲染出不同的组件，放置的位置决定渲染的位置</li>
+</ul>
+<img src="https://i.loli.net/2020/03/09/XbofSjkwE5W76Fe.png" alt="img" style="zoom:67%;" />
+
+<p>最终效果如下：</p>
+<img src="https://i.loli.net/2020/03/09/5Nbf8EOn2xeGJwK.png" alt="img" style="zoom:67%;" />
+
+
+
+<h3 id="细节处理"><a href="#细节处理" class="headerlink" title="细节处理"></a>细节处理</h3><h4 id="路由的默认路径"><a href="#路由的默认路径" class="headerlink" title="路由的默认路径"></a>路由的默认路径</h4><p>默认情况下, 进入网站的首页，我们希望 <code>&lt;router-view&gt;</code> 渲染首页的内容，但是在上面的实现中，默认没有显示首页组件，必须让用户点击才可以</p>
+<p>如何可以让路径默认跳到到首页，并且<code>&lt;router-view&gt;</code>渲染首页组件呢?</p>
+<p>只需要多配置一个映射就可以了：</p>
+<p><img src="https://i.loli.net/2020/03/09/fWSOVEsakT1U2Cb.png" alt="图片.png"></p>
+<p>我们在 routes 中又配置了一个映射：</p>
+<ul>
+<li>path：根路径 <code>/</code></li>
+<li>redirect：重定向，也就是将根路径重定向到 <code>/home</code> 的路径下</li>
+</ul>
+<p>这样，打开页面时，就会默认显示首页的内容了</p>
+<h4 id="HTML5-的-History-模式"><a href="#HTML5-的-History-模式" class="headerlink" title="HTML5 的 History 模式"></a>HTML5 的 History 模式</h4><p>前面说过改变路径的方式有两种：</p>
+<ul>
+<li>URL 的 hash</li>
+<li>HTML5 的 history</li>
+</ul>
+<p>默认情况下，Vue 路径的改变使用的是 URL 的 hash，这样显示出的页面的地址中有一个 <code>#</code> 号，不太美观：</p>
+<p><img src="https://i.loli.net/2020/03/09/L2qsSMwQpOakzIK.png" alt="图片.png"></p>
+<p>可以使用 HTML5 的 history 模式来进行改变，进行如下配置即可：</p>
+<p><img src="https://i.loli.net/2020/03/09/PI6d5uNkF8rnSQc.png" alt="图片.png"></p>
+<p><img src="https://i.loli.net/2020/03/09/ZPOdbyCv3j4XhMJ.png" alt="图片.png"></p>
+<h3 id="router-link-补充"><a href="#router-link-补充" class="headerlink" title="router-link 补充"></a>router-link 补充</h3><p>在前面的 <code>&lt;router-link&gt;</code> 中，我们只是使用了一个属性<code>:to</code>，用于指定跳转的路径</p>
+<p><code>&lt;router-link&gt;</code> 还有一些其他属性：</p>
+<ul>
+<li><p>tag：tag 可以指定 <code>&lt;router-link&gt;</code> 之后渲染成什么组件，默认是渲染为 <code>&lt;a&gt;&lt;/a&gt;</code> 标签</p>
+<p>我们可以使用 <code>tag=&quot;button&quot;</code>、<code>tag=&quot;li&quot;</code> 来改变</p>
+</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/WTZzycJX5AvxlKG.png" alt="img" style="zoom:67%;" />
+
+<p><img src="https://i.loli.net/2020/03/13/pWwKIosetLrPNBG.png" alt="图片.png"></p>
+<ul>
+<li><p>replace</p>
+<p>默认使用的是 HTML5 的 history 模式下的 pushState，可以通过浏览器进行返回和前进，如果想要禁用返回和前进，可以指定 replace 即可</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-link to&#x3D;&quot;&#x2F;home&quot; tag&#x3D;&quot;button&quot; replace&gt;首页&lt;&#x2F;router-link&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>active-class: 当<code>&lt;router-link&gt;</code>对应的路由匹配成功时，会自动给当前元素设置一个 <code>router-link-active</code> 的class</li>
+</ul>
+<p><img src="https://i.loli.net/2020/03/13/X6UhO2ACutJjzEr.png" alt="img"></p>
+<p>设置 <code>active-class</code> 可以修改默认的名称：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-link to&#x3D;&quot;&#x2F;home&quot; tag&#x3D;&quot;button&quot; active-class&#x3D;&quot;active&quot;&gt;首页&lt;&#x2F;router-link&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/03/13/QBl7CiMpObc41zd.png" alt="img"></p>
+<p>在进行高亮显示的导航菜单或者底部 tabbar 时，会使用到该类，比如想设置按钮点击时变为红色：</p>
+<img src="https://i.loli.net/2020/03/13/Rrv7qxWVXlaTiLm.png" alt="img" style="zoom:67%;" />
+
+<p><img src="https://i.loli.net/2020/03/13/8xyzG7oQFwEsqUh.png" alt="图片.png"></p>
+<p>该 class 具体的名称也可以通过 router 实例的属性进行统一修改：</p>
+<p><img src="https://i.loli.net/2020/03/13/Iz6NlHTrqFePxLk.png" alt="图片.png"></p>
+<p>但是通常不会修改类的属性, 会直接使用默认的 router-link-active 即可</p>
+<h3 id="路由代码跳转"><a href="#路由代码跳转" class="headerlink" title="路由代码跳转"></a><strong>路由代码跳转</strong></h3><p>有时候，页面的跳转可能需要执行对应的 JavaScript 代码，这个时候，就可以使用第二种跳转方式了,比如，我们将代码修改如下：</p>
+<img src="https://i.loli.net/2020/03/13/WZrnv4Kji8omgzY.png" alt="img" style="zoom:67%;" />
+
+<p><code>$router</code> 属性已经被 vue-router 嵌套进所有的组件中，可以在组件中直接使用</p>
+<p>这里如果想禁用浏览器前进后退的功能的话，可以使用<code>this.$router.replace(&#39;/home&#39;)</code> 即可</p>
+<h3 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h3><p><a name="params"></a></p>
+<p><a href="#canshu">参数传递</a></p>
+<p>在某些情况下，一个页面的 path 路径可能是不确定的，比如我们进入用户界面时，希望是如下的路径：<code>/user/aaaa</code> 或 <code>/user/bbbb</code>，除了有前面的 <code>/user</code>之外，后面还跟上了用户的 ID</p>
+<p>这种 path 和 Component 的匹配关系，称之为动态路由（也是路由传递数据的一种方式）</p>
+<ol>
+<li>在 <code>vue-router</code> 的路由路径中使用“动态路径参数”(dynamic segment) ：</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/Rl7cuvWTpJNUMBZ.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>在组件中手动绑定一个用户 ID：</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/1ih5ldmq7zZfAU2.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>更新 <code>User</code> 的模板，输出当前用户的 ID：</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/uSHeWkDx7R9Unpo.png" alt="img" style="zoom:67%;" />
+
+<ol start="4">
+<li>查看显示效果：</li>
+</ol>
+<p><img src="https://i.loli.net/2020/03/13/u7swmgkySfdYHEC.png" alt="图片.png"></p>
+<h3 id="路由的懒加载"><a href="#路由的懒加载" class="headerlink" title="路由的懒加载"></a>路由的懒加载</h3><h4 id="认识路由的懒加载"><a href="#认识路由的懒加载" class="headerlink" title="认识路由的懒加载"></a>认识路由的懒加载</h4><p>当打包构建应用时，Javascript 包会变得非常大，影响页面加载，如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了</p>
+<p>为了实现这种效果，我们可以使用路由的懒加载</p>
+<p>路由懒加载的主要作用就是将路由对应的组件打包成一个个的 js 代码块，只有在这个路由被访问到的时候，才加载对应的组件</p>
+<h4 id="懒加载的三种写法"><a href="#懒加载的三种写法" class="headerlink" title="懒加载的三种写法"></a>懒加载的三种写法</h4><ol>
+<li>结合 Vue 的异步组件和 Webpack 的代码分析（早期的懒加载写法，能认识就行，不要求会写）</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = <span class="function"><span class="params">resolve</span> =&gt;</span> &#123; <span class="built_in">require</span>.ensure([<span class="string">'../components/Home.vue'</span>], () =&gt; &#123; resolve(<span class="built_in">require</span>(<span class="string">'../components/Home.vue'</span>)) &#125;)&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>AMD 写法</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> About = <span class="function"><span class="params">resolve</span> =&gt;</span> <span class="built_in">require</span>([<span class="string">'../components/About.vue'</span>], resolve);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在ES6中，可以用更加简单的写法来组织 Vue 异步组件和 Webpack 的代码分割</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../components/Home.vue'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>路由懒加载的效果</strong></p>
+<img src="https://i.loli.net/2020/03/13/8dgnHwYQU4vDiPM.png" alt="img" style="zoom:67%;" />
+
+<h2 id="Vue-router-嵌套路由"><a href="#Vue-router-嵌套路由" class="headerlink" title="Vue-router 嵌套路由"></a>Vue-router 嵌套路由</h2><p>嵌套路由是一个很常见的功能，比如在 home 页面中，我们希望通过 <code>/home/news</code> 和 <code>/home/message</code> 访问一些内容，一个路径映射一个组件，访问这两个路径也会分别渲染两个组件</p>
+<p>路径和组件的关系如下:</p>
+<img src="https://i.loli.net/2020/03/13/32xXWELcQiNbaKo.png" alt="img" style="zoom: 80%;" />
+
+<p>实现嵌套路由有两个步骤：</p>
+<ol>
+<li>创建对应的子组件，并且在路由映射中配置对应的子路由</li>
+</ol>
+<ul>
+<li>定义两个子组件</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/wS4HK7pOeREn2yk.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>配置子组件的路由</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/7SMhQsHR8pVOTFY.png" alt="img" style="zoom:67%;" />
+
+<ul>
+<li>配置嵌套路由的默认路径</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/9fFGTNKd2akD47S.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>在父组件内部显示子组件</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/mxwQEecNFzuRqyj.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>查看显示效果</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/xu3IHwPfy12BLAX.png" alt="img" style="zoom:67%;" />
+
+<h2 id="Vue-router-参数传递"><a href="#Vue-router-参数传递" class="headerlink" title="Vue-router 参数传递"></a>Vue-router 参数传递</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>为了演示传递参数，再创建一个组件，并且将其配置好</p>
+<ol>
+<li>创建新的组件 Profile.vue</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/A4qsbJXYlOfw3Qn.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>配置路由映射</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/daknbYPph8cAOE1.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>添加跳转的<code>&lt;router-link&gt;</code></li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/wKxQCzkt2filIoP.png" alt="img" style="zoom:67%;" />
+
+
+
+<h3 id="传递参数的方式"><a href="#传递参数的方式" class="headerlink" title="传递参数的方式"></a>传递参数的方式</h3><p>传递参数主要有两种类型: params 和 query</p>
+<p>如果数据简单且少使用 params ，如果数据较多就使用 query</p>
+<ul>
+<li><p>params </p>
+<p><a name="canshu"></a></p>
+<p><a href="#params">跳转到详细使用</a></p>
+<ul>
+<li>配置路由格式：<code>/router/:id</code></li>
+<li>传递的方式：在 path 后面跟上对应的值</li>
+<li>传递后形成的路径：<code>/router/123</code>，<code>/router/abc</code></li>
+</ul>
+</li>
+<li><p>query</p>
+<ul>
+<li>配置路由格式：<code>/router</code></li>
+<li>传递的方式：对象中使用 query 的 key 作为传递方式</li>
+<li>传递后形成的路径：<code>/router?id=123</code>，<code>/router?id=abc</code></li>
+</ul>
+</li>
+</ul>
+<img src="https://i.loli.net/2020/03/13/fOt1e3Y8DVrodxJ.png" alt="img" style="zoom:67%;" />
+
+<p>这里获取并打印这些数据：</p>
+<img src="https://i.loli.net/2020/03/13/o5Tp9QuYqf4jKGP.png" alt="img" style="zoom:67%;" />
+
+<img src="https://i.loli.net/2020/03/13/9T4bD3urlFs8Q5N.png" alt="img" style="zoom:67%;" />
+
+<p><strong>获取参数</strong></p>
+<p>获取参数是通过 <em>route</em> 对象获取的，在使用了 <em>vue_−_router</em> 的应用中，路由对象会被注入每个组件中，赋值为<code>_this_.route</code> ，并且当路由切换时，路由对象会被更新</p>
+<p><strong>route 和 router 的区别</strong></p>
+<ul>
+<li><em>$router</em> 为 VueRouter 实例，想要导航到不同 URL，则使用 <code>router.push</code> 方法</li>
+<li>$route 为当前 router 跳转对象，是当前处于活跃的路由，里面可以获取 name、path、query、params 等</li>
+</ul>
+<h2 id="Vue-router-导航守卫"><a href="#Vue-router-导航守卫" class="headerlink" title="Vue-router 导航守卫"></a>Vue-router 导航守卫</h2><p>在一个 SPA 应用中，如何改变网页的标题呢？</p>
+<p>普通的修改方式：在每一个路由对应的组件 <code>.vue</code> 文件中，通过 mounted 声明周期函数，执行对应的代码进行修改</p>
+<p>但是当页面比较多时，需要在多个页面执行类似的代码，所以这种方式不容易维护</p>
+<p>更好的办法是使用导航守卫</p>
+<h3 id="什么是导航守卫"><a href="#什么是导航守卫" class="headerlink" title="什么是导航守卫"></a>什么是导航守卫</h3><p>导航守卫主要用来监听路由的进入和离开，vue-router 提供了 beforeEach 和 afterEach 的钩子函数，它们会在路由即将改变前和改变后触发</p>
+<h3 id="导航守卫使用"><a href="#导航守卫使用" class="headerlink" title="导航守卫使用"></a>导航守卫使用</h3><p>我们可以利用 beforeEach 来完成标题的修改：</p>
+<ol>
+<li>在钩子当中利用 meta 来定义标题</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/PdjigxO2n3LSHYR.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>利用导航守卫，修改标题</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/fWqJmEc9y6SRbDr.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>查看修改效果</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/MC3eIhrTGstDBcq.png" alt="img" style="zoom:67%;" />
+
+
+
+<h3 id="导航钩子的三个参数解析"><a href="#导航钩子的三个参数解析" class="headerlink" title="导航钩子的三个参数解析"></a>导航钩子的三个参数解析</h3><ul>
+<li>to: 即将要进入的目标的路由对象</li>
+<li>from: 当前导航即将要离开的路由对象</li>
+<li>next: 调用该方法后，才能进入下一个钩子</li>
+</ul>
+<h3 id="导航守卫补充"><a href="#导航守卫补充" class="headerlink" title="导航守卫补充"></a>导航守卫补充</h3><ul>
+<li>如果是后置钩子，也就是afterEach，不需要主动调用 next() 函数</li>
+<li>beforEach 必须要调用 next() 函数，不然就会终止，不会往下执行</li>
+<li>上面使用的导航守卫，被称之为全局守卫，除此之外，还有路由独享的守卫、组件内的守卫</li>
+</ul>
+<h2 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a>keep-alive</h2><p>keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，或避免重新渲染</p>
+<p>router-view 也是一个组件，如果直接被包在 keep-alive 里面，所有路径匹配到的视图组件都会被缓存：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;keep-alive&gt;</span><br><span class="line">  &lt;router-view&gt;</span><br><span class="line">    &lt;!-- 所有路径匹配到的试图组件都会被缓存！ --&gt;</span><br><span class="line">  &lt;&#x2F;router-view&gt;</span><br><span class="line">&lt;&#x2F;keep-alive&gt;</span><br></pre></td></tr></table></figure>
+
+<p>现在有这样一个需求：首页正正在显示的是被嵌套的消息路由，当我们点击其他页面，又重新点击首页时，让首页仍然显示被嵌套的消息路由</p>
+<img src="https://i.loli.net/2020/03/13/57zJr6jbOMS3maA.png" alt="img" style="zoom:67%;" />
+
+<ol>
+<li>先取消嵌套路由的默认路径</li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/2xtDMhkwX6lpyre.png" alt="img" style="zoom:67%;" />
+
+<ol start="2">
+<li>在 App.vue 中使用 <code>&lt;keep-alive&gt;&lt;/keep-alive&gt;</code> 包裹 <code>&lt;router-view/&gt;</code></li>
+</ol>
+<img src="https://i.loli.net/2020/03/13/7IA2pdNK5FH63aC.png" alt="img" style="zoom:67%;" />
+
+<ol start="3">
+<li>在 Home.vue 中记录离开之前的路径</li>
+</ol>
+<p><code>activated</code>：当组件处于活跃的时候调用，只有在使用 keep-alive 的前提下才有作用</p>
+<p><code>deactivated</code>：当组件不是活跃的时候调用，同上</p>
+<p><code>beforeRouteLeave</code>：在离开之前调用</p>
+<img src="https://i.loli.net/2020/03/13/7VnspvNE5X68CBG.png" alt="img" style="zoom:67%;" />
+
+<p>keep-alive 还有两个非常重要的属性:</p>
+<ul>
+<li>include - 字符串或正则表达，只有匹配的组件会被缓存</li>
+<li>exclude - 字符串或正则表达式，任何匹配的组件都不会被缓存</li>
+</ul>
+<p>让部分组件不缓存：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 这里传的参数是组件里的 name 属性的值，如果需要传入多个组件的话，逗号后面不要留空格，不然会出现问题</span><br><span class="line">&lt;keep-alive exclude&#x3D;&quot;Profile,User&quot;&gt;</span><br><span class="line">  &lt;router-view&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;keep-alive&gt;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="余健 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="余健 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <div>   
+             
+          <div>     
+             
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        -------------本文结束 <i class="fa fa-paw"></i> 感谢您的阅读-------------
+    </div>     
+     
+</div>   
+         
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 前端</a>
+              <a href="/tags/Vue/" rel="tag"><i class="fa fa-tag"></i> Vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/13/VueCli/" rel="prev" title="VueCli">
+      <i class="fa fa-chevron-left"></i> VueCli
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/13/Vuex/" rel="next" title="Vuex">
+      Vuex <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80ODgyMi8yNTMxNg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-router"><span class="nav-number">1.</span> <span class="nav-text">Vue-router</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#认识路由"><span class="nav-number">1.1.</span> <span class="nav-text">认识路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是路由"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么是路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网站发展的几个阶段"><span class="nav-number">1.1.2.</span> <span class="nav-text">网站发展的几个阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#后端路由阶段"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">后端路由阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前端路由阶段"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">前端路由阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#前后端分离阶段"><span class="nav-number">1.1.2.2.1.</span> <span class="nav-text">前后端分离阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#单页面富应用阶段"><span class="nav-number">1.1.2.2.2.</span> <span class="nav-text">单页面富应用阶段</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变-URL，页面不刷新"><span class="nav-number">1.1.3.</span> <span class="nav-text">改变 URL，页面不刷新</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#URL-的-hash"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">URL 的 hash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTML5-的-history-模式"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">HTML5 的 history 模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-router-基本使用"><span class="nav-number">1.2.</span> <span class="nav-text">Vue-router 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-vue-router"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装 vue-router</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-vue-router"><span class="nav-number">1.2.2.</span> <span class="nav-text">使用 vue-router</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#细节处理"><span class="nav-number">1.2.3.</span> <span class="nav-text">细节处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#路由的默认路径"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">路由的默认路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTML5-的-History-模式"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">HTML5 的 History 模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#router-link-补充"><span class="nav-number">1.2.4.</span> <span class="nav-text">router-link 补充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由代码跳转"><span class="nav-number">1.2.5.</span> <span class="nav-text">路由代码跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态路由"><span class="nav-number">1.2.6.</span> <span class="nav-text">动态路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由的懒加载"><span class="nav-number">1.2.7.</span> <span class="nav-text">路由的懒加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#认识路由的懒加载"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">认识路由的懒加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#懒加载的三种写法"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">懒加载的三种写法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-router-嵌套路由"><span class="nav-number">1.3.</span> <span class="nav-text">Vue-router 嵌套路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-router-参数传递"><span class="nav-number">1.4.</span> <span class="nav-text">Vue-router 参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.4.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传递参数的方式"><span class="nav-number">1.4.2.</span> <span class="nav-text">传递参数的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-router-导航守卫"><span class="nav-number">1.5.</span> <span class="nav-text">Vue-router 导航守卫</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是导航守卫"><span class="nav-number">1.5.1.</span> <span class="nav-text">什么是导航守卫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导航守卫使用"><span class="nav-number">1.5.2.</span> <span class="nav-text">导航守卫使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导航钩子的三个参数解析"><span class="nav-number">1.5.3.</span> <span class="nav-text">导航钩子的三个参数解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导航守卫补充"><span class="nav-number">1.5.4.</span> <span class="nav-text">导航守卫补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keep-alive"><span class="nav-number">1.6.</span> <span class="nav-text">keep-alive</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="余健"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">余健</p>
+  <div class="site-description" itemprop="description">沧海月明珠有泪，蓝田日暖玉生烟。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2lhbXl1amlhbg==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iamyujian"><i class="fa fa-fw fa-github"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/736755736@qq.com" title="E-Mail → 736755736@qq.com"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+        
+      
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">锦瑟</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">307k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:39</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,255' opacity='0.2' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9},"log":false});</script></body>
+</html>
