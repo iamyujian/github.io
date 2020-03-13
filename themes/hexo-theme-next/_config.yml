@@ -62,7 +62,7 @@ footer:
     color: "#ff0000"
 
   # If not defined, `author` from Hexo `_config.yml` will be used.
-  copyright: 哈哈
+  copyright: 锦瑟
 
   powered:
     # Hexo link (Powered by Hexo).
@@ -95,7 +95,7 @@ footer:
 creative_commons:
   license: by-nc-sa
   sidebar: false
-  post: true
+  post: false
   language: deed.zh
 
 
@@ -105,9 +105,9 @@ creative_commons:
 
 # Schemes
 # scheme: Muse
-scheme: Mist
+# scheme: Mist
 # scheme: Pisces
-# scheme: Gemini
+scheme: Gemini
 
 
 # ---------------------------------------------------------------
@@ -121,7 +121,7 @@ scheme: Mist
 # External url should start with http:// or https://
 menu:
   home: / || home
-  about: /about/ || user
+  # about: /about/ || user
   tags: /tags/ || tags
   categories: /categories/ || th
   archives: /archives/ || archive
@@ -131,8 +131,9 @@ menu:
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
-  icons: true
-  badges: true
+  icons: false
+  badges: false
+
 
 
 # ---------------------------------------------------------------
@@ -271,7 +272,7 @@ reward_settings:
   # If true, reward will be displayed in every article by default.
   enable: true
   animation: true
-  comment: 此情可待成追忆，只怪当时没赏钱
+  comment: 
 
 reward:
   wechatpay: /images/wechatpay.png
@@ -321,10 +322,10 @@ post_navigation: left
 # TagCloud settings for tags page.
 tagcloud:
   # All values below are same as default, change them by yourself.
-  min: 12 # Minimun font size in px
+  min: 16 # Minimun font size in px
   max: 30 # Maxium font size in px
-  start: "#ccc" # Start color (hex, rgba, hsla or color keywords)
-  end: "#111" # End color (hex, rgba, hsla or color keywords)
+  start: "#52c41a" # Start color (hex, rgba, hsla or color keywords)
+  end: "#389e0d" # End color (hex, rgba, hsla or color keywords)
   amount: 200 # Amount of tags, change it if you have more than 200 tags
 
 # Google Calendar
@@ -401,7 +402,7 @@ bookmark:
 
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:
-  enable: true
+  enable: false
   permalink: https://github.com/iamyujian
   title: My GitHub
 
@@ -708,8 +709,8 @@ cnzz_siteid:
 # Do not enable both `valine.visitor` and `leancloud_visitors`.
 leancloud_visitors:
   enable: false
-  app_id: # <app_id>
-  app_key: # <app_key>
+  app_id: S9gKDsigcds2Rd3cHdxSND4V-gzGzoHsz
+  app_key: it13CcBqsL8A0xw877PIj1mO
   # Dependencies: https://github.com/theme-next/hexo-leancloud-counter-security
   # If you don't care about security in leancloud counter and just want to use it directly
   # (without hexo-leancloud-counter-security plugin), set `security` to `false`.
@@ -729,11 +730,11 @@ firestore:
 # Get more information on http://ibruce.info/2015/04/04/busuanzi
 busuanzi_count:
   enable: false
-  total_visitors: true
+  total_visitors: false  #统计访客数
   total_visitors_icon: user
-  total_views: true
+  total_views: false  #统计访问数
   total_views_icon: eye
-  post_views: true
+  post_views: false  #统计文章阅读数
   post_views_icon: eye
 
 
@@ -883,7 +884,7 @@ canvas_nest:
   enable: true
   onmobile: false # Display on mobile or not
   color: "0,0,255" # RGB values, use `,` to separate
-  opacity: 0.4 # The opacity of line: 0~1
+  opacity: 0.2 # The opacity of line: 0~1
   zIndex: -1 # z-index property of the background
   count: 99 # The number of lines
 
@@ -1039,6 +1040,9 @@ passage_end_tag:
 # Online contact (聊天)
 daovoice: true
 daovoice_app_id: e2de3bae
+
+
+
 
 # Assets
 css: css

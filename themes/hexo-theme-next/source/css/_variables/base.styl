@@ -12,8 +12,8 @@ $gray-lighter = #ddd;
 $grey-light   = #ccc;
 $grey         = #bbb;
 $grey-dark    = #999;
-$grey-dim     = #666;
-$black-light  = #555;
+$grey-dim     = #aed581; //归档页面字体颜色
+$black-light  = #d9d9d9;    // 侧边头像下的链接小图标颜色
 $black-dim    = #333;
 $black-deep   = #222;
 $red          = #ff2a2a;
@@ -27,13 +27,13 @@ $orange       = #fc6423;
 // Settings for some of the most global styles.
 // --------------------------------------------------
 // Global text color on <body>
-$text-color                   = $black-light;
+$text-color                   = #d9d9d9; //文章文本内容、阅读全文、文章里面的标题也变色 默认$black-light
 
 // Global link color.
-$link-color                   = $black-light;
-$link-hover-color             = $black-deep;
-$link-decoration-color        = $grey-dark;
-$link-decoration-hover-color  = $black-deep;
+$link-color                   = #52c41a; // 侧边栏字体颜色、分类于、等所有的a标签字体颜色默认$black-deep
+$link-hover-color             = #fa541c;// 所有a标签鼠标经过的颜色
+$link-decoration-color        = #52c41a; // a标签下面横线的颜色
+$link-decoration-hover-color  = #fa541c; // a标签下面横线的颜色
 
 // Global border color.
 $border-color                 = $grey-light;
@@ -133,8 +133,8 @@ $table-row-hover-bg-color       = $whitesmoke;
 // --------------------------------------------------
 $code-font-family               = $font-family-monospace;
 $code-border-radius             = 3px;
-$code-foreground                = $black-light;
-$code-background                = $gainsboro;
+$code-foreground                = #faad14;   // 高亮代码字体颜色 默认$black-light
+$code-background                = #222;    // 高亮代码背景颜色 默认$gainsboro
 
 
 // Buttons
@@ -158,15 +158,15 @@ $pagination-border              = $gainsboro;
 
 $pagination-link-bg             = transparent;
 $pagination-link-color          = $link-color;
-$pagination-link-border         = $gainsboro;
+$pagination-link-border         = #52c41a; // 除了当前分页按钮上面 其他所有横杠的颜色 默认$gainsboro
 
 $pagination-link-hover-bg       = transparent;
 $pagination-link-hover-color    = $link-color;
-$pagination-link-hover-border   = $black-deep;
+$pagination-link-hover-border   = #fa541c; // 除了当前分页按钮上面 其他所有横杠的颜色，鼠标经过 默认$black-deep
 
-$pagination-active-bg           = $grey-light;
-$pagination-active-color        = white;
-$pagination-active-border       = $grey-light;
+$pagination-active-bg           = #fa541c; // 当前分页背景色 默认$grey-light
+$pagination-active-color        = white;        // 当前分页字体色
+$pagination-active-border       = #fa541c;  // 当前分页上面的横杠颜色
 
 
 // Layout sizes
@@ -183,7 +183,7 @@ $content-mobile-padding         = 8px;
 // Headband
 // --------------------------------------------------
 $headband-height                = 3px;
-$headband-bg                    = $black-deep;
+$headband-bg                    = $black-deep; // 页面最顶部的一条黑色的颜色
 
 
 // Section Header
@@ -193,8 +193,8 @@ $head-bg                        = transparent;
 
 // Site Meta
 $site-meta-text-align           = center;
-$brand-color                    = white;
-$brand-hover-color              = white;
+$brand-color                    = white; //网站标题字体颜色
+$brand-hover-color              = white;  //网站标题字体经过颜色
 $brand-bg                       = $black-deep;
 
 $font-size-title                = (hexo-config('font.enable') and hexo-config('font.title.size') is a 'unit') ? unit(hexo-config('font.title.size'), em) : $font-size-largest;
@@ -215,7 +215,7 @@ $posts-collapse-margin-mobile   = 20px;
 
 $sidebar-padding                      = hexo-config('sidebar.padding') is a 'unit' ? unit(hexo-config('sidebar.padding'), px) : 18px;
 $sidebar-offset                       = hexo-config('sidebar.offset') is a 'unit' ? unit(hexo-config('sidebar.offset'), px) : 12px;
-$sidebar-nav-color                    = $black-light;
+$sidebar-nav-color                    = $black-light; //文章目录、站点概览这8个字的颜色
 $sidebar-nav-hover-color              = $whitesmoke;
 $sidebar-highlight                    = $blue-bright;
 
@@ -237,7 +237,7 @@ $site-description-align               = center;
 
 $site-state-align                     = center;
 $site-state-item-count-font-size      = $font-size-larger;
-$site-state-item-count-color          = inherit;
+$site-state-item-count-color          = inherit;   //侧边日志、分类、标签上的数字的颜色默认inherit 
 $site-state-item-name-font-size       = $font-size-small;
 $site-state-item-name-color           = inherit;
 $site-state-item-border-color         = $black-dim;
